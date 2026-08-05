@@ -10,13 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
+import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
+import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteNosRoute = ConteNosRouteImport.update({
+  id: '/conte-nos',
+  path: '/conte-nos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CultosRoute = CultosRouteImport.update({
@@ -29,6 +37,16 @@ const MensagensRoute = MensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NovoAquiRoute = NovoAquiRouteImport.update({
+  id: '/novo-aqui',
+  path: '/novo-aqui',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfertasRoute = OfertasRouteImport.update({
+  id: '/ofertas',
+  path: '/ofertas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -37,35 +55,69 @@ const SobreRoute = SobreRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/novo-aqui': typeof NovoAquiRoute
+  '/ofertas': typeof OfertasRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/novo-aqui': typeof NovoAquiRoute
+  '/ofertas': typeof OfertasRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/novo-aqui': typeof NovoAquiRoute
+  '/ofertas': typeof OfertasRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cultos' | '/mensagens' | '/sobre'
+  fullPaths:
+    | '/'
+    | '/conte-nos'
+    | '/cultos'
+    | '/mensagens'
+    | '/novo-aqui'
+    | '/ofertas'
+    | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cultos' | '/mensagens' | '/sobre'
-  id: '__root__' | '/' | '/cultos' | '/mensagens' | '/sobre'
+  to:
+    | '/'
+    | '/conte-nos'
+    | '/cultos'
+    | '/mensagens'
+    | '/novo-aqui'
+    | '/ofertas'
+    | '/sobre'
+  id:
+    | '__root__'
+    | '/'
+    | '/conte-nos'
+    | '/cultos'
+    | '/mensagens'
+    | '/novo-aqui'
+    | '/ofertas'
+    | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConteNosRoute: typeof ConteNosRoute
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
+  NovoAquiRoute: typeof NovoAquiRoute
+  OfertasRoute: typeof OfertasRoute
   SobreRoute: typeof SobreRoute
 }
 
@@ -76,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conte-nos': {
+      id: '/conte-nos'
+      path: '/conte-nos'
+      fullPath: '/conte-nos'
+      preLoaderRoute: typeof ConteNosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cultos': {
@@ -92,6 +151,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/novo-aqui': {
+      id: '/novo-aqui'
+      path: '/novo-aqui'
+      fullPath: '/novo-aqui'
+      preLoaderRoute: typeof NovoAquiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ofertas': {
+      id: '/ofertas'
+      path: '/ofertas'
+      fullPath: '/ofertas'
+      preLoaderRoute: typeof OfertasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -104,8 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConteNosRoute: ConteNosRoute,
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
+  NovoAquiRoute: NovoAquiRoute,
+  OfertasRoute: OfertasRoute,
   SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport

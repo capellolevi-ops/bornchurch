@@ -38,6 +38,7 @@ const schema = z.object({
 
 function NovoAqui() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const err = (k: string) => errors[k];
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,10 +71,10 @@ function NovoAqui() {
       <section className="px-6 py-20">
         <Reveal className="mx-auto max-w-2xl">
           <form onSubmit={handleSubmit} noValidate className="card-lux grid gap-5">
-            <Field label="Nome" htmlFor="nome" error={errors.nome}>
+            <Field label="Nome" htmlFor="nome" error={err("nome")}>
               <input id="nome" name="nome" className={fieldClass} placeholder="Seu nome completo" />
             </Field>
-            <Field label="Telefone" htmlFor="telefone" error={errors.telefone}>
+            <Field label="Telefone" htmlFor="telefone" error={err("telefone")}>
               <input
                 id="telefone"
                 name="telefone"
@@ -82,7 +83,7 @@ function NovoAqui() {
                 placeholder="(00) 00000-0000"
               />
             </Field>
-            <Field label="E-mail" htmlFor="email" error={errors.email}>
+            <Field label="E-mail" htmlFor="email" error={err("email")}>
               <input
                 id="email"
                 name="email"
@@ -91,11 +92,11 @@ function NovoAqui() {
                 placeholder="voce@email.com"
               />
             </Field>
-            <Field label="Cidade" htmlFor="cidade" error={errors.cidade}>
+            <Field label="Cidade" htmlFor="cidade" error={err("cidade")}>
               <input id="cidade" name="cidade" className={fieldClass} placeholder="Sua cidade" />
             </Field>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Vai visitar sozinho?" htmlFor="sozinho" error={errors.sozinho}>
+              <Field label="Vai visitar sozinho?" htmlFor="sozinho" error={err("sozinho")}>
                 <select id="sozinho" name="sozinho" defaultValue="" className={fieldClass}>
                   <option value="" disabled>
                     Selecione
@@ -104,7 +105,7 @@ function NovoAqui() {
                   <option value="nao">Não, vou acompanhado(a)</option>
                 </select>
               </Field>
-              <Field label="Quantas pessoas irão?" htmlFor="pessoas" error={errors.pessoas}>
+              <Field label="Quantas pessoas irão?" htmlFor="pessoas" error={err("pessoas")}>
                 <input
                   id="pessoas"
                   name="pessoas"
@@ -116,7 +117,7 @@ function NovoAqui() {
                 />
               </Field>
             </div>
-            <Field label="Como conheceu a igreja?" htmlFor="origem" error={errors.origem}>
+            <Field label="Como conheceu a igreja?" htmlFor="origem" error={err("origem")}>
               <input
                 id="origem"
                 name="origem"

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -71,20 +71,6 @@ function Contato() {
                   <p className="mt-1 text-sm text-muted-foreground">
                     {siteConfig.contact.address}
                   </p>
-                </div>
-              </li>
-              <li className="card-lux flex gap-4">
-                <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-gold" />
-                <div className="min-w-0">
-                  <h2 className="font-display text-lg text-foreground">WhatsApp</h2>
-                  <a
-                    href={siteConfig.contact.whatsappLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-1 block text-sm text-muted-foreground hover:text-gold"
-                  >
-                    {siteConfig.contact.whatsapp}
-                  </a>
                 </div>
               </li>
               <li className="card-lux flex gap-4">

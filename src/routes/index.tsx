@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
           slogan: siteConfig.tagline,
           address: siteConfig.contact.address,
           email: siteConfig.contact.email,
-          telephone: siteConfig.contact.whatsapp,
+          sameAs: [siteConfig.social.youtube, siteConfig.social.instagram],
         }),
       },
     ],

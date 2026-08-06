@@ -14,11 +14,15 @@ export function Footer() {
     <footer className="border-t border-border bg-secondary/30 px-6 py-16">
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="" width={44} height={44} loading="lazy" className="h-10 w-10" />
-            <span className="font-display text-xl text-foreground">
-              Born <span className="text-gold">Church</span>
-            </span>
+          <div className="flex items-center">
+            <img
+              src={logo}
+              alt="Born Church"
+              width={910}
+              height={294}
+              loading="lazy"
+              className="h-10 w-auto"
+            />
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
             “{siteConfig.tagline}”

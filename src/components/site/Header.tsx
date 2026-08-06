@@ -30,11 +30,14 @@ export function Header() {
       )}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 lg:px-8">
-        <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={logo} alt="Born Church" width={40} height={40} className="h-9 w-9 shrink-0" />
-          <span className="truncate font-display text-lg tracking-wide text-foreground">
-            Born <span className="text-gold">Church</span>
-          </span>
+        <Link to="/" className="flex min-w-0 items-center" onClick={() => setOpen(false)}>
+          <img
+            src={logo}
+            alt="Born Church"
+            width={910}
+            height={294}
+            className="h-8 w-auto sm:h-9"
+          />
         </Link>
 
         <nav className="hidden items-center gap-6 xl:flex">

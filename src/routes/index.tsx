@@ -46,8 +46,9 @@ function Home() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden px-6 pt-24">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--gold)_10%,transparent),transparent_60%)]" />
-        <div className="absolute inset-0 bg-hero-veil" />
+        <HeroSlideshow />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--gold)_10%,transparent),transparent_60%)]" />
+
 
         <motion.div
           initial={{ opacity: 0, y: 32 }}

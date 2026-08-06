@@ -45,15 +45,9 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <>
-      {/* Hero com imagem de um momento de adoração */}
+      {/* Hero */}
       <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden px-6 pt-24">
-        <img
-          src={heroImg}
-          alt="Congregação em momento de adoração na Born Church"
-          width={1920}
-          height={1088}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--gold)_10%,transparent),transparent_60%)]" />
         <div className="absolute inset-0 bg-hero-veil" />
 
         <motion.div

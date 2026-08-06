@@ -3,7 +3,9 @@ import { motion } from "motion/react";
 import { ArrowRight, Clock, HeartHandshake, Sparkles } from "lucide-react";
 
 import aboutImg from "@/assets/about-church.jpg";
+import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 import { Reveal } from "@/components/site/Reveal";
+
 import { services, siteConfig } from "@/config/site";
 
 export const Route = createFileRoute("/")({

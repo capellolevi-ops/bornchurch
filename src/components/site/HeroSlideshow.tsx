@@ -17,6 +17,7 @@ const INTERVAL = 6000;
 
 export function HeroSlideshow() {
   const [index, setIndex] = useState(0);
+  const current = slides[index] ?? slides[0]!;
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -30,8 +31,8 @@ export function HeroSlideshow() {
       <AnimatePresence mode="sync">
         <motion.img
           key={index}
-          src={slides[index].src}
-          alt={slides[index].alt}
+          src={current.src}
+          alt={current.alt}
           loading={index === 0 ? "eager" : "lazy"}
           initial={{ opacity: 0, scale: 1.12 }}
           animate={{ opacity: 1, scale: 1 }}

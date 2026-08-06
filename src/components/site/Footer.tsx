@@ -4,7 +4,7 @@ import { Mail, MapPin } from "lucide-react";
 import logo from "@/assets/born-logo.png";
 import { navItems, siteConfig } from "@/config/site";
 
-import { SocialLinks } from "./Header";
+import { SocialLinks } from "./SocialLinks";
 
 /** Rodapé com navegação, contato, redes sociais e direitos autorais. */
 export function Footer() {

@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Menu, X, Youtube } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/born-logo.png";
-import { navItems, siteConfig } from "@/config/site";
+import { navItems } from "@/config/site";
 import { cn } from "@/lib/utils";
+
+import { SocialLinks } from "./SocialLinks";
 
 /** Menu superior fixo, com navegação responsiva e redes sociais. */
 export function Header() {
@@ -81,30 +83,5 @@ export function Header() {
         </nav>
       ) : null}
     </header>
-  );
-}
-
-export function SocialLinks({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex items-center gap-3", className)}>
-      <a
-        href={siteConfig.social.youtube}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="YouTube da Born Church"
-        className="text-muted-foreground transition-colors hover:text-gold"
-      >
-        <Youtube className="h-5 w-5" />
-      </a>
-      <a
-        href={siteConfig.social.instagram}
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Instagram da Born Church"
-        className="text-muted-foreground transition-colors hover:text-gold"
-      >
-        <Instagram className="h-5 w-5" />
-      </a>
-    </div>
   );
 }

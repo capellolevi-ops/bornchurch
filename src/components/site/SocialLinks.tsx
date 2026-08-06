@@ -20,7 +20,7 @@ function InstagramIcon({ className }: { className?: string }) {
 }
 
 const itemClass =
-  "group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:border-gold hover:text-gold hover:shadow-[0_0_18px_-4px_hsl(var(--gold)/0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60";
+  "group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:border-gold hover:text-gold hover:shadow-[0_0_18px_-4px_var(--gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60";
 
 /** Ícones de redes sociais com abertura em nova aba. */
 export function SocialLinks({ className }: { className?: string }) {

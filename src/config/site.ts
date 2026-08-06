@@ -12,10 +12,10 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/globalchurchpinhais/",
   },
   contact: {
-    address: "Av. Principal, 1000 — Centro, Sua Cidade — UF",
+    address: "Rua Rio Paraná, 754 — Weissópolis, Pinhais — PR, 83323-000",
     email: "globalchurch@gmail.com",
     mapsEmbed:
-      "https://www.google.com/maps?q=igreja&output=embed",
+      "https://www.google.com/maps?q=Rua%20Rio%20Paran%C3%A1%2C%20754%20-%20Weiss%C3%B3polis%2C%20Pinhais%20-%20PR%2C%2083323-000&output=embed",
   },
   pix: {
     label: "PIX (CNPJ)",

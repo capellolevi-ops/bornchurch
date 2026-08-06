@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowRight, Clock, HeartHandshake, Sparkles } from "lucide-react";
 
-import heroImg from "@/assets/hero-worship.jpg";
 import aboutImg from "@/assets/about-church.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { services, siteConfig } from "@/config/site";

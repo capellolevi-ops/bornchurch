@@ -8,14 +8,12 @@ export const siteConfig = {
   name: "Born Church",
   tagline: "Levando pessoas a conhecerem Jesus.",
   social: {
-    youtube: "https://www.youtube.com/", // substitua pelo canal oficial
-    instagram: "https://www.instagram.com/", // substitua pelo perfil oficial
+    youtube: "https://youtube.com/@bornagainchurchpinhais?si=5ZCVWw90uLYIrB2K",
+    instagram: "https://www.instagram.com/globalchurchpinhais/",
   },
   contact: {
     address: "Av. Principal, 1000 — Centro, Sua Cidade — UF",
-    whatsapp: "+55 00 00000-0000",
-    whatsappLink: "https://wa.me/5500000000000",
-    email: "contato@bornchurch.com",
+    email: "globalchurch@gmail.com",
     mapsEmbed:
       "https://www.google.com/maps?q=igreja&output=embed",
   },

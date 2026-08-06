@@ -3,7 +3,9 @@ import { motion } from "motion/react";
 import { ArrowRight, Clock, HeartHandshake, Sparkles } from "lucide-react";
 
 import aboutImg from "@/assets/about-church.jpg";
+import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 import { Reveal } from "@/components/site/Reveal";
+
 import { services, siteConfig } from "@/config/site";
 
 export const Route = createFileRoute("/")({
@@ -46,8 +48,9 @@ function Home() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden px-6 pt-24">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--gold)_10%,transparent),transparent_60%)]" />
-        <div className="absolute inset-0 bg-hero-veil" />
+        <HeroSlideshow />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--gold)_10%,transparent),transparent_60%)]" />
+
 
         <motion.div
           initial={{ opacity: 0, y: 32 }}

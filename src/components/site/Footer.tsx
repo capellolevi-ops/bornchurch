@@ -54,6 +54,12 @@ export function Footer() {
               {siteConfig.contact.email}
             </a>
           </li>
+          <li className="flex gap-3">
+            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+            <a href={siteConfig.contact.phoneHref} className="hover:text-gold">
+              {siteConfig.contact.phone}
+            </a>
+          </li>
         </ul>
       </div>
 

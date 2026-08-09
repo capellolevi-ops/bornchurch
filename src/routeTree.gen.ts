@@ -16,6 +16,7 @@ import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
+import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const OfertasRoute = OfertasRouteImport.update({
   path: '/ofertas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServirRoute = ServirRouteImport.update({
+  id: '/servir',
+  path: '/servir',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/mensagens': typeof MensagensRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/mensagens': typeof MensagensRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/mensagens': typeof MensagensRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/novo-aqui'
     | '/ofertas'
+    | '/servir'
     | '/sobre'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/novo-aqui'
     | '/ofertas'
+    | '/servir'
     | '/sobre'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/mensagens'
     | '/novo-aqui'
     | '/ofertas'
+    | '/servir'
     | '/sobre'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   MensagensRoute: typeof MensagensRoute
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
+  ServirRoute: typeof ServirRoute
   SobreRoute: typeof SobreRoute
 }
 
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OfertasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/servir': {
+      id: '/servir'
+      path: '/servir'
+      fullPath: '/servir'
+      preLoaderRoute: typeof ServirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -203,18 +223,9 @@ const rootRouteChildren: RootRouteChildren = {
   MensagensRoute: MensagensRoute,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
+  ServirRoute: ServirRoute,
   SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

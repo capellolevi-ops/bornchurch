@@ -58,11 +58,62 @@ export const sermons = [
   { id: "", title: "Culto de Celebração" },
 ] as const;
 
+/** Áreas e funções disponíveis para servir */
+export const serveAreas = [
+  {
+    id: "midia",
+    label: "Mídia",
+    roles: [
+      "Video maker",
+      "Técnico de iluminação",
+      "Técnico de transmissão",
+      "Operador de projeção",
+      "Fotografia",
+      "Social media",
+    ],
+  },
+  {
+    id: "louvor",
+    label: "Louvor",
+    roles: [
+      "Vocal",
+      "Violão / Guitarra",
+      "Baixo",
+      "Bateria",
+      "Teclado",
+      "Técnico de som (mesa)",
+      "Back vocal",
+    ],
+  },
+  {
+    id: "boas-vindas",
+    label: "Boas-vindas",
+    roles: [
+      "Recepção na porta",
+      "Acolhimento de visitantes",
+      "Estacionamento",
+      "Cafeteria",
+      "Ofertas e ordem",
+    ],
+  },
+  {
+    id: "limpeza",
+    label: "Limpeza",
+    roles: [
+      "Limpeza antes do culto",
+      "Limpeza após o culto",
+      "Organização do templo",
+      "Manutenção",
+    ],
+  },
+] as const;
+
 export const navItems = [
   { label: "Início", to: "/" },
   { label: "Sobre", to: "/sobre" },
   { label: "Cultos", to: "/cultos" },
   { label: "Mensagens", to: "/mensagens" },
+  { label: "Servir", to: "/servir" },
   { label: "Conte-nos", to: "/conte-nos" },
   { label: "Ofertas e Dízimos", to: "/ofertas" },
   { label: "Você é novo aqui?", to: "/novo-aqui" },

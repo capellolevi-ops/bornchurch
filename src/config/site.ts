@@ -14,6 +14,9 @@ export const siteConfig = {
   contact: {
     address: "Rua Rio Paraná, 754 — Weissópolis, Pinhais — PR, 83323-000",
     email: "bornchurch0@gmail.com",
+    phone: "(41) 99196-4800",
+    phoneHref: "tel:+5541991964800",
+    whatsapp: "https://wa.me/5541991964800",
     mapsEmbed:
       "https://www.google.com/maps?q=Rua%20Rio%20Paran%C3%A1%2C%20754%20-%20Weiss%C3%B3polis%2C%20Pinhais%20-%20PR%2C%2083323-000&output=embed",
   },
@@ -55,11 +58,62 @@ export const sermons = [
   { id: "", title: "Culto de Celebração" },
 ] as const;
 
+/** Áreas e funções disponíveis para servir */
+export const serveAreas = [
+  {
+    id: "midia",
+    label: "Mídia",
+    roles: [
+      "Video maker",
+      "Técnico de iluminação",
+      "Técnico de transmissão",
+      "Operador de projeção",
+      "Fotografia",
+      "Social media",
+    ],
+  },
+  {
+    id: "louvor",
+    label: "Louvor",
+    roles: [
+      "Vocal",
+      "Violão / Guitarra",
+      "Baixo",
+      "Bateria",
+      "Teclado",
+      "Técnico de som (mesa)",
+      "Back vocal",
+    ],
+  },
+  {
+    id: "boas-vindas",
+    label: "Boas-vindas",
+    roles: [
+      "Recepção na porta",
+      "Acolhimento de visitantes",
+      "Estacionamento",
+      "Cafeteria",
+      "Ofertas e ordem",
+    ],
+  },
+  {
+    id: "limpeza",
+    label: "Limpeza",
+    roles: [
+      "Limpeza antes do culto",
+      "Limpeza após o culto",
+      "Organização do templo",
+      "Manutenção",
+    ],
+  },
+] as const;
+
 export const navItems = [
   { label: "Início", to: "/" },
   { label: "Sobre", to: "/sobre" },
   { label: "Cultos", to: "/cultos" },
   { label: "Mensagens", to: "/mensagens" },
+  { label: "Servir", to: "/servir" },
   { label: "Conte-nos", to: "/conte-nos" },
   { label: "Ofertas e Dízimos", to: "/ofertas" },
   { label: "Você é novo aqui?", to: "/novo-aqui" },

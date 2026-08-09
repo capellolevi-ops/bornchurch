@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import logo from "@/assets/born-logo.png";
 import { navItems, siteConfig } from "@/config/site";
@@ -52,6 +52,12 @@ export function Footer() {
             <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
             <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-gold">
               {siteConfig.contact.email}
+            </a>
+          </li>
+          <li className="flex gap-3">
+            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+            <a href={siteConfig.contact.phoneHref} className="hover:text-gold">
+              {siteConfig.contact.phone}
             </a>
           </li>
         </ul>

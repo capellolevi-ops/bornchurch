@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";

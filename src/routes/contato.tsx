@@ -85,6 +85,18 @@ function Contato() {
                   </a>
                 </div>
               </li>
+              <li className="card-lux flex gap-4">
+                <Phone className="mt-1 h-5 w-5 shrink-0 text-gold" />
+                <div className="min-w-0">
+                  <h2 className="font-display text-lg text-foreground">Telefone / WhatsApp</h2>
+                  <a
+                    href={siteConfig.contact.phoneHref}
+                    className="mt-1 block text-sm text-muted-foreground hover:text-gold"
+                  >
+                    {siteConfig.contact.phone}
+                  </a>
+                </div>
+              </li>
             </ul>
 
             <div className="overflow-hidden rounded-2xl border border-border">

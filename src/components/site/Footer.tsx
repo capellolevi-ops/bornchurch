@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import logo from "@/assets/born-logo.png";
 import { navItems, siteConfig } from "@/config/site";

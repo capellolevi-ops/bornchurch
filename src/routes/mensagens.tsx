@@ -51,34 +51,42 @@ function Mensagens() {
 
       <section className="px-6 py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {sermons.map((video, i) => (
-            <Reveal key={video.title} delay={i * 0.1}>
-              <article className="card-lux h-full p-0">
-                <div className="aspect-video w-full overflow-hidden rounded-t-2xl bg-secondary">
-                  {video.id ? (
-                    // Basta preencher o ID do vídeo em src/config/site.ts
-                    <iframe
-                      className="h-full w-full"
-                      src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-                      title={video.title}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
-                      <PlayCircle className="h-8 w-8 text-gold" />
-                      <span className="text-xs uppercase tracking-[0.25em]">Em breve</span>
-                    </div>
-                  )}
-                </div>
-                <div className="p-6">
-                  <h2 className="font-display text-xl text-foreground">{video.title}</h2>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+          {covers.map((cover, i) => {
+            const video = sermons[i];
+            return (
+              <Reveal key={cover.src} delay={i * 0.1}>
+                <article className="card-lux h-full p-0">
+                  <div className="aspect-video w-full overflow-hidden rounded-t-2xl bg-secondary">
+                    {video?.id ? (
+                      // Basta preencher o ID do vídeo em src/config/site.ts
+                      <iframe
+                        className="h-full w-full"
+                        src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                        title={video.title}
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <img
+                        src={cover.src}
+                        alt={cover.alt}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h2 className="font-display text-xl text-foreground">
+                      {video?.title ?? cover.alt}
+                    </h2>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
+
 
         <Reveal className="mt-14 text-center">
           <a

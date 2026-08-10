@@ -14,8 +14,10 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
+import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
+import { Route as ProximoPassoRouteImport } from './routes/proximo-passo'
 import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
 
@@ -44,6 +46,11 @@ const MensagensRoute = MensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MinisteriosRoute = MinisteriosRouteImport.update({
+  id: '/ministerios',
+  path: '/ministerios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NovoAquiRoute = NovoAquiRouteImport.update({
   id: '/novo-aqui',
   path: '/novo-aqui',
@@ -52,6 +59,11 @@ const NovoAquiRoute = NovoAquiRouteImport.update({
 const OfertasRoute = OfertasRouteImport.update({
   id: '/ofertas',
   path: '/ofertas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProximoPassoRoute = ProximoPassoRouteImport.update({
+  id: '/proximo-passo',
+  path: '/proximo-passo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServirRoute = ServirRouteImport.update({
@@ -71,8 +83,10 @@ export interface FileRoutesByFullPath {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
@@ -82,8 +96,10 @@ export interface FileRoutesByTo {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
@@ -94,8 +110,10 @@ export interface FileRoutesById {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
 }
@@ -107,8 +125,10 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/proximo-passo'
     | '/servir'
     | '/sobre'
   fileRoutesByTo: FileRoutesByTo
@@ -118,8 +138,10 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/proximo-passo'
     | '/servir'
     | '/sobre'
   id:
@@ -129,8 +151,10 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/proximo-passo'
     | '/servir'
     | '/sobre'
   fileRoutesById: FileRoutesById
@@ -141,8 +165,10 @@ export interface RootRouteChildren {
   ConteNosRoute: typeof ConteNosRoute
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
+  MinisteriosRoute: typeof MinisteriosRoute
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
+  ProximoPassoRoute: typeof ProximoPassoRoute
   ServirRoute: typeof ServirRoute
   SobreRoute: typeof SobreRoute
 }
@@ -184,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ministerios': {
+      id: '/ministerios'
+      path: '/ministerios'
+      fullPath: '/ministerios'
+      preLoaderRoute: typeof MinisteriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/novo-aqui': {
       id: '/novo-aqui'
       path: '/novo-aqui'
@@ -196,6 +229,13 @@ declare module '@tanstack/react-router' {
       path: '/ofertas'
       fullPath: '/ofertas'
       preLoaderRoute: typeof OfertasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proximo-passo': {
+      id: '/proximo-passo'
+      path: '/proximo-passo'
+      fullPath: '/proximo-passo'
+      preLoaderRoute: typeof ProximoPassoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/servir': {
@@ -221,21 +261,13 @@ const rootRouteChildren: RootRouteChildren = {
   ConteNosRoute: ConteNosRoute,
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
+  MinisteriosRoute: MinisteriosRoute,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
+  ProximoPassoRoute: ProximoPassoRoute,
   ServirRoute: ServirRoute,
   SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

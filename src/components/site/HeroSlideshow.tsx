@@ -1,17 +1,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
+import { heroPhotos } from "@/config/photos";
 
-const slides = [
-  { src: hero1, alt: "Congregação em momento de adoração com as mãos levantadas" },
-  { src: hero2, alt: "Culto de louvor com luzes sobre a plateia" },
-  { src: hero3, alt: "Interior de igreja durante o culto" },
-  { src: hero4, alt: "Banda de louvor ministrando no palco" },
-];
+const slides = heroPhotos;
+
 
 const INTERVAL = 6000;
 
@@ -46,8 +39,8 @@ export function HeroSlideshow() {
       </AnimatePresence>
 
       {/* Véus para legibilidade */}
-      <div className="absolute inset-0 bg-background/70" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
+      <div className="absolute inset-0 bg-background/55" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/25 to-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent,color-mix(in_oklab,var(--background)_85%,transparent))]" />
 
       {/* Indicadores */}

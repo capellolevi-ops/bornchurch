@@ -201,3 +201,29 @@
   );
 }
 
+
+/* Modo claro (ativado pela classe .light no <html>) */
+.light {
+  --background: oklch(0.98 0.004 260);
+  --foreground: oklch(0.18 0.01 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.01 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.01 260);
+  --primary: oklch(0.62 0.12 82);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.95 0.008 260);
+  --secondary-foreground: oklch(0.2 0.01 260);
+  --muted: oklch(0.95 0.008 260);
+  --muted-foreground: oklch(0.45 0.015 260);
+  --accent: oklch(0.93 0.02 265);
+  --accent-foreground: oklch(0.2 0.01 260);
+  --border: oklch(0.18 0.01 260 / 14%);
+  --input: oklch(0.18 0.01 260 / 16%);
+
+  --gold: oklch(0.62 0.12 82);
+  --gold-soft: oklch(0.74 0.11 86);
+  --navy: oklch(0.9 0.03 265);
+
+  --shadow-lux: 0 24px 60px -32px oklch(0.2 0.02 260 / 30%);
+}

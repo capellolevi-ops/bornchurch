@@ -39,11 +39,12 @@ export const services = [
   },
   {
     day: "Quarta-feira",
-    title: "Culto de Oração e Fé",
+    title: "Quarta Profética",
     times: ["20h00"],
     description:
-      "Uma noite dedicada à oração, ao ensino da Palavra e ao fortalecimento espiritual.",
+      "Uma noite de oração, palavra profética e fé para receber direção de Deus e renovar as forças.",
   },
+
   {
     day: "Eventos Especiais",
     title: "Conferências e Encontros",

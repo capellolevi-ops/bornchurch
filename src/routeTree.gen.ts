@@ -14,6 +14,7 @@ import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
+import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as ServirRouteImport } from './routes/servir'
@@ -44,6 +45,11 @@ const MensagensRoute = MensagensRouteImport.update({
   path: '/mensagens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MinisteriosRoute = MinisteriosRouteImport.update({
+  id: '/ministerios',
+  path: '/ministerios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NovoAquiRoute = NovoAquiRouteImport.update({
   id: '/novo-aqui',
   path: '/novo-aqui',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/servir': typeof ServirRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/servir': typeof ServirRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
+  '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/servir': typeof ServirRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
     | '/servir'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
     | '/servir'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/conte-nos'
     | '/cultos'
     | '/mensagens'
+    | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
     | '/servir'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   ConteNosRoute: typeof ConteNosRoute
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
+  MinisteriosRoute: typeof MinisteriosRoute
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
   ServirRoute: typeof ServirRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MensagensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ministerios': {
+      id: '/ministerios'
+      path: '/ministerios'
+      fullPath: '/ministerios'
+      preLoaderRoute: typeof MinisteriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/novo-aqui': {
       id: '/novo-aqui'
       path: '/novo-aqui'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConteNosRoute: ConteNosRoute,
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
+  MinisteriosRoute: MinisteriosRoute,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
   ServirRoute: ServirRoute,
@@ -229,13 +250,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

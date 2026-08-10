@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { JoinButton } from "@/components/site/JoinButton";
 import { services, siteConfig } from "@/config/site";
 
 export const Route = createFileRoute("/cultos")({
@@ -49,6 +50,7 @@ function Cultos() {
                     </li>
                   ))}
                 </ul>
+                <JoinButton serviceName={s.title} />
               </article>
             </Reveal>
           ))}

@@ -7,6 +7,8 @@
 export const siteConfig = {
   name: "Born Church",
   tagline: "Levando pessoas a conhecerem Jesus.",
+  highlight: "O novo começa agora",
+
   social: {
     youtube: "https://youtube.com/@bornagainchurchpinhais?si=5ZCVWw90uLYIrB2K",
     instagram: "https://www.instagram.com/globalchurchpinhais/",

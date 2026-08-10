@@ -49,7 +49,7 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex">
+        <nav className="hidden items-center gap-5 2xl:flex">
           {navItems.map((item) => (
             <Link
               key={item.to}
@@ -66,7 +66,7 @@ export function Header() {
           <ThemeToggle />
         </nav>
 
-        <div className="flex items-center gap-2 xl:hidden">
+        <div className="flex items-center gap-2 2xl:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -86,7 +86,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-[60px] z-40 h-[calc(100dvh-60px)] overflow-y-auto border-t border-border bg-background px-5 pb-10 pt-6 xl:hidden"
+            className="fixed inset-x-0 top-[60px] z-40 h-[calc(100dvh-60px)] overflow-y-auto border-t border-border bg-background px-5 pb-10 pt-6 2xl:hidden"
           >
             <div className="grid gap-2">
               {navItems.map((item, i) => (

@@ -100,12 +100,10 @@ export function JoinButton({ serviceName }: { serviceName: string }) {
                 >
                   Avisar no WhatsApp
                 </a>
-                <a
-                  href={siteConfig.contact.mapsLink ?? "/contato"}
-                  className="btn-outline w-full"
-                >
+                <a href="/contato" className="btn-outline w-full">
                   <CalendarPlus className="h-4 w-4" /> Ver endereço
                 </a>
+
               </div>
             </motion.div>
           </motion.div>

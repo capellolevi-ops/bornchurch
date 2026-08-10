@@ -39,8 +39,8 @@ export function HeroSlideshow() {
       </AnimatePresence>
 
       {/* Véus para legibilidade */}
-      <div className="absolute inset-0 bg-background/70" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
+      <div className="absolute inset-0 bg-background/55" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/25 to-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent,color-mix(in_oklab,var(--background)_85%,transparent))]" />
 
       {/* Indicadores */}

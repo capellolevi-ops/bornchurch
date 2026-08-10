@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 
 function NotFoundComponent() {
   return (
@@ -112,6 +113,12 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('born-theme')==='light'){document.documentElement.classList.add('light')}}catch(e){}",
+          }}
+        />
       </head>
       <body>
         {children}
@@ -132,6 +139,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppButton />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

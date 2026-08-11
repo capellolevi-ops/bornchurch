@@ -51,7 +51,7 @@ const results: Record<
   },
   servir: {
     title: "Seu próximo passo é: Servir em um ministério",
-    text: "Você já está firme na caminhada. É hora de usar os seus dons — louvor, mídia, acolhimento, kids, ação social e muito mais.",
+    text: "Você já está firme na caminhada. É hora de usar os seus dons — louvor, mídia, acolhimento, kids e muito mais.",
     cta: { label: "Quero servir", to: "/servir" },
   },
 };

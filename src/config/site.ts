@@ -135,7 +135,7 @@ export const serveAreas = [
 export const ministries = [
   {
     id: "jovens",
-    name: "Born Youth",
+    name: "Purpose",
     summary: "Jovens vivendo uma fé real, com encontros, louvor e discipulado.",
     when: "Sábados, 19h30",
   },
@@ -149,19 +149,13 @@ export const ministries = [
     id: "louvor",
     name: "Louvor e Adoração",
     summary: "Banda, vocal e técnica conduzindo a igreja à presença de Deus.",
-    when: "Ensaios às sextas",
+    when: "Todos os cultos",
   },
   {
     id: "midia",
     name: "Mídia e Comunicação",
     summary: "Transmissão, fotografia, projeção, social media e iluminação.",
     when: "Escala por culto",
-  },
-  {
-    id: "acao-social",
-    name: "Ação Social",
-    summary: "Cestas básicas, visitas e projetos que servem a cidade de Pinhais.",
-    when: "Mensal",
   },
   {
     id: "acolhimento",

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
-import aboutImg from "@/assets/about-church.jpg";
+import { photos } from "@/config/photos";
 
 export const Route = createFileRoute("/sobre")({
   head: () => ({
@@ -50,8 +50,8 @@ function Sobre() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <img
-              src={aboutImg}
-              alt="Interior da Born Church"
+              src={photos.comunhao.src}
+              alt={photos.comunhao.alt}
               width={1280}
               height={960}
               loading="lazy"

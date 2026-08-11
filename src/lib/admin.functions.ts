@@ -48,6 +48,8 @@ export const adminLogout = createServerFn({ method: "POST" }).handler(async () =
 });
 
 type Table = "service_times" | "events" | "announcements" | "sermons";
+type Value = string | number | boolean | string[] | null;
+export type Row = Record<string, Value>;
 
 const orderBy: Record<Table, { column: string; ascending: boolean }> = {
   service_times: { column: "sort_order", ascending: true },
@@ -63,27 +65,46 @@ export const adminList = createServerFn({ method: "POST" })
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const order = orderBy[data.table];
-    const { data: rows, error } = await supabaseAdmin
+    const db = supabaseAdmin as unknown as {
+      from: (t: string) => {
+        select: (c: string) => {
+          order: (
+            c: string,
+            o: { ascending: boolean },
+          ) => Promise<{ data: Row[] | null; error: { message: string } | null }>;
+        };
+        update: (v: Row) => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+        insert: (v: Row) => Promise<{ error: { message: string } | null }>;
+        delete: () => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+      };
+    };
+    const { data: rows, error } = await db
       .from(data.table)
       .select("*")
       .order(order.column, { ascending: order.ascending });
     if (error) throw new Error(error.message);
-    return (rows ?? []) as Array<Record<string, unknown>>;
+    return rows ?? [];
   });
 
 export const adminSave = createServerFn({ method: "POST" })
-  .inputValidator((data: { table: Table; id?: string; values: Record<string, unknown> }) => data)
+  .inputValidator((data: { table: Table; id?: string; values: Row }) => data)
   .handler(async ({ data }) => {
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const db = supabaseAdmin as unknown as {
+      from: (t: string) => {
+        update: (v: Row) => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+        insert: (v: Row) => Promise<{ error: { message: string } | null }>;
+      };
+    };
     if (data.id) {
-      const { error } = await supabaseAdmin
+      const { error } = await db
         .from(data.table)
         .update(data.values)
         .eq("id", data.id);
       if (error) throw new Error(error.message);
     } else {
-      const { error } = await supabaseAdmin.from(data.table).insert(data.values);
+      const { error } = await db.from(data.table).insert(data.values);
       if (error) throw new Error(error.message);
     }
     return { ok: true as const };
@@ -94,7 +115,12 @@ export const adminDelete = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     await requireAdmin();
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin.from(data.table).delete().eq("id", data.id);
+    const db = supabaseAdmin as unknown as {
+      from: (t: string) => {
+        delete: () => { eq: (c: string, v: string) => Promise<{ error: { message: string } | null }> };
+      };
+    };
+    const { error } = await db.from(data.table).delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });

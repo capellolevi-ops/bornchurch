@@ -33,7 +33,7 @@ export const services = [
   {
     day: "Domingo",
     title: "Culto de Celebração",
-    times: ["10h00", "18h00"],
+    times: ["10h00", "18h30 às 21h00"],
     description:
       "Nosso principal encontro da semana: louvor, palavra e comunhão para toda a família.",
   },
@@ -44,7 +44,27 @@ export const services = [
     description:
       "Uma noite de oração, palavra profética e fé para receber direção de Deus e renovar as forças.",
   },
-
+  {
+    day: "Quinta-feira",
+    title: "Set Prayer",
+    times: ["22h00"],
+    description:
+      "Um set de oração na madrugada da fé: intercessão, adoração e busca pela presença de Deus.",
+  },
+  {
+    day: "Sexta-feira",
+    title: "Torre de Oração",
+    times: ["20h00"],
+    description:
+      "Nossa torre de intercessão pela igreja, pelas famílias e pela cidade de Pinhais.",
+  },
+  {
+    day: "Sábado",
+    title: "Purpose",
+    times: ["19h30"],
+    description:
+      "Encontro de jovens: louvor, palavra e amizade para viver o propósito de Deus.",
+  },
   {
     day: "Eventos Especiais",
     title: "Conferências e Encontros",

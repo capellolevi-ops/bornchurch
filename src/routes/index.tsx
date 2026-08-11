@@ -69,7 +69,8 @@ function Home() {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-7 inline-block rounded-full border border-gold/50 bg-background/40 px-6 py-2 font-display text-xl tracking-wide text-gold backdrop-blur-sm sm:text-2xl"
+            style={{ fontFamily: "Impact, 'Haettenschweiler', 'Arial Narrow Bold', sans-serif" }}
+            className="mx-auto mt-7 inline-block rounded-full border border-gold/50 bg-background/40 px-6 py-2 text-2xl uppercase tracking-wide text-white backdrop-blur-sm sm:text-3xl"
           >
             {siteConfig.highlight}
           </motion.p>

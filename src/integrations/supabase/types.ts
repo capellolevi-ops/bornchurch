@@ -14,7 +14,150 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      announcements: {
+        Row: {
+          body: string
+          created_at: string
+          ends_at: string | null
+          id: string
+          published: boolean
+          starts_at: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          published?: boolean
+          starts_at?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          published?: boolean
+          starts_at?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      events: {
+        Row: {
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          image_url: string | null
+          location: string
+          published: boolean
+          starts_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          location?: string
+          published?: boolean
+          starts_at: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          location?: string
+          published?: boolean
+          starts_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sermons: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          preached_on: string | null
+          preacher: string
+          published: boolean
+          title: string
+          updated_at: string
+          youtube_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          preached_on?: string | null
+          preacher?: string
+          published?: boolean
+          title: string
+          updated_at?: string
+          youtube_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          preached_on?: string | null
+          preacher?: string
+          published?: boolean
+          title?: string
+          updated_at?: string
+          youtube_id?: string
+        }
+        Relationships: []
+      }
+      service_times: {
+        Row: {
+          created_at: string
+          day: string
+          description: string
+          id: string
+          published: boolean
+          sort_order: number
+          times: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day: string
+          description?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          times?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          description?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          times?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -63,9 +63,13 @@ export function Footer() {
         </ul>
       </div>
 
-      <div className="mx-auto mt-12 max-w-7xl border-t border-border pt-6 text-center text-xs text-muted-foreground">
-        © {year} {siteConfig.name}. Todos os direitos reservados.
+      <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center gap-2 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+        <span>© {year} {siteConfig.name}. Todos os direitos reservados.</span>
+        <Link to="/admin" className="transition-colors hover:text-gold">
+          Área restrita
+        </Link>
       </div>
+
     </footer>
   );
 }

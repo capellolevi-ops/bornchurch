@@ -13,12 +13,12 @@ export const Route = createFileRoute("/ministerios")({
       {
         name: "description",
         content:
-          "Conheça os ministérios da Born Church: jovens, crianças, louvor, mídia, ação social e acolhimento. Encontre o seu lugar para servir.",
+          "Conheça os ministérios da Born Church: jovens, crianças, louvor, mídia e acolhimento. Encontre o seu lugar para servir.",
       },
       { property: "og:title", content: "Ministérios — Born Church" },
       {
         property: "og:description",
-        content: "Jovens, crianças, louvor, mídia, ação social e acolhimento.",
+        content: "Jovens, crianças, louvor, mídia e acolhimento.",
       },
       { property: "og:url", content: "/ministerios" },
     ],

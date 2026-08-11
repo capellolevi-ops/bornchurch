@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
 import { JoinButton } from "@/components/site/JoinButton";
 import { services, siteConfig } from "@/config/site";
+import { getServiceTimes } from "@/lib/content.functions";
 
 export const Route = createFileRoute("/cultos")({
   head: () => ({
@@ -21,10 +22,27 @@ export const Route = createFileRoute("/cultos")({
     ],
     links: [{ rel: "canonical", href: "/cultos" }],
   }),
+  loader: async () => {
+    try {
+      return { serviceTimes: await getServiceTimes() };
+    } catch {
+      return { serviceTimes: [] };
+    }
+  },
+  errorComponent: () => (
+    <PageHeader
+      eyebrow="Agenda"
+      title="Nossos Cultos"
+      description="Não foi possível carregar os horários agora. Tente novamente em instantes."
+    />
+  ),
   component: Cultos,
 });
 
 function Cultos() {
+  const { serviceTimes } = Route.useLoaderData();
+  const list = serviceTimes.length > 0 ? serviceTimes : services;
+
   return (
     <>
       <PageHeader
@@ -35,8 +53,8 @@ function Cultos() {
 
       <section className="px-6 py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
-          {services.map((s, i) => (
-            <Reveal key={s.day} delay={i * 0.1}>
+          {list.map((s, i) => (
+            <Reveal key={`${s.day}-${s.title}`} delay={i * 0.1}>
               <article className="card-lux h-full">
                 <p className="text-xs uppercase tracking-[0.3em] text-gold">{s.day}</p>
                 <h2 className="mt-4 font-display text-2xl text-foreground">{s.title}</h2>

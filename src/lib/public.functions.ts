@@ -21,7 +21,8 @@ function publicClient() {
   });
 }
 
-export type SiteContent = Record<string, Record<string, unknown>>;
+export type ContentValue = Record<string, string | number | boolean | null>;
+export type SiteContent = Record<string, ContentValue>;
 
 export type PublicEvent = {
   id: string;
@@ -61,7 +62,7 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(async ()
   const { data } = await publicClient().from("site_content").select("key, value");
   const out: SiteContent = {};
   for (const row of data ?? []) {
-    out[row.key] = (row.value ?? {}) as Record<string, unknown>;
+    out[row.key] = (row.value ?? {}) as ContentValue;
   }
   return out;
 });

@@ -1,17 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, LogOut, Plus, Save, Trash2 } from "lucide-react";
+import { Bell, Download, Loader2, LogOut } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
+import { ContentPanel } from "@/components/admin/ContentPanel";
+import { DashboardPanel } from "@/components/admin/DashboardPanel";
+import { PrayersPanel } from "@/components/admin/PrayersPanel";
+import { SubmissionsPanel } from "@/components/admin/SubmissionsPanel";
+import { RowEditor, emptyRow, inputClass, type EditorField } from "@/components/admin/ui";
 import { PageHeader } from "@/components/site/PageHeader";
 import {
-  adminDelete,
+  adminBackup,
   adminList,
   adminLogin,
   adminLogout,
-  adminSave,
+  adminNotifications,
+  adminReadNotifications,
   adminStatus,
   type Row,
+  type Table,
 } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/admin")({
@@ -21,7 +28,7 @@ export const Route = createFileRoute("/admin")({
       {
         name: "description",
         content:
-          "Área restrita da Born Church para gerenciar horários de culto, eventos, avisos e pregações.",
+          "Área restrita da Born Church para gerenciar conteúdo, eventos, formulários e pedidos de oração.",
       },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Painel Administrativo — Born Church" },
@@ -31,17 +38,13 @@ export const Route = createFileRoute("/admin")({
   component: Admin,
 });
 
-type Table = "service_times" | "events" | "announcements" | "sermons";
-type Field = {
-  name: string;
-  label: string;
-  type: "text" | "textarea" | "number" | "date" | "datetime" | "list" | "bool";
-};
+type CrudSection = { id: string; label: string; table: Table; fields: EditorField[]; titleField?: string };
 
-const tabs: Array<{ id: Table; label: string; fields: Field[] }> = [
+const crudSections: CrudSection[] = [
   {
     id: "service_times",
     label: "Horários",
+    table: "service_times",
     fields: [
       { name: "day", label: "Dia", type: "text" },
       { name: "title", label: "Nome do culto", type: "text" },
@@ -54,19 +57,22 @@ const tabs: Array<{ id: Table; label: string; fields: Field[] }> = [
   {
     id: "events",
     label: "Eventos",
+    table: "events",
     fields: [
       { name: "title", label: "Título", type: "text" },
       { name: "starts_at", label: "Data e hora", type: "datetime" },
       { name: "location", label: "Local", type: "text" },
       { name: "description", label: "Descrição", type: "textarea" },
       { name: "image_url", label: "URL da imagem (opcional)", type: "text" },
-      { name: "featured", label: "Destaque", type: "bool" },
+      { name: "link", label: "Link de inscrição (opcional)", type: "text" },
+      { name: "featured", label: "Destaque (cronômetro na home)", type: "bool" },
       { name: "published", label: "Publicado", type: "bool" },
     ],
   },
   {
     id: "announcements",
     label: "Avisos",
+    table: "announcements",
     fields: [
       { name: "title", label: "Título", type: "text" },
       { name: "body", label: "Mensagem", type: "textarea" },
@@ -74,8 +80,24 @@ const tabs: Array<{ id: Table; label: string; fields: Field[] }> = [
     ],
   },
   {
+    id: "banners",
+    label: "Banner do topo",
+    table: "banners",
+    titleField: "text",
+    fields: [
+      { name: "text", label: "Texto do aviso", type: "textarea" },
+      { name: "button_label", label: "Texto do botão (opcional)", type: "text" },
+      { name: "link", label: "Link do botão (opcional)", type: "text" },
+      { name: "image_url", label: "URL da imagem (opcional)", type: "text" },
+      { name: "starts_at", label: "Exibir a partir de", type: "datetime" },
+      { name: "ends_at", label: "Exibir até", type: "datetime" },
+      { name: "active", label: "Ativo", type: "bool" },
+    ],
+  },
+  {
     id: "sermons",
     label: "Pregações",
+    table: "sermons",
     fields: [
       { name: "title", label: "Título", type: "text" },
       { name: "preacher", label: "Pregador", type: "text" },
@@ -85,26 +107,49 @@ const tabs: Array<{ id: Table; label: string; fields: Field[] }> = [
       { name: "published", label: "Publicado", type: "bool" },
     ],
   },
+  {
+    id: "gallery_photos",
+    label: "Galeria",
+    table: "gallery_photos",
+    fields: [
+      { name: "url", label: "URL da foto", type: "text" },
+      { name: "title", label: "Título", type: "text" },
+      { name: "description", label: "Descrição (texto alternativo)", type: "textarea" },
+      { name: "sort_order", label: "Ordem", type: "number" },
+      { name: "published", label: "Publicada", type: "bool" },
+    ],
+  },
+  {
+    id: "admin_users",
+    label: "Equipe",
+    table: "admin_users",
+    titleField: "name",
+    fields: [
+      { name: "name", label: "Nome", type: "text" },
+      { name: "email", label: "E-mail de acesso", type: "text" },
+      {
+        name: "role",
+        label: "Função",
+        type: "select",
+        options: [
+          { value: "admin", label: "Administrador" },
+          { value: "editor", label: "Editor" },
+          { value: "moderator", label: "Moderador" },
+        ],
+      },
+      { name: "password", label: "Senha (deixe vazio para manter)", type: "password" },
+      { name: "active", label: "Ativo", type: "bool" },
+    ],
+  },
 ];
-
-const inputClass =
-  "mt-2 w-full rounded-xl border border-border bg-background/60 px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-gold";
-
-function emptyRow(fields: Field[]): Row {
-  const row: Row = {};
-  for (const f of fields) {
-    row[f.name] =
-      f.type === "bool" ? true : f.type === "number" ? 0 : f.type === "list" ? [] : "";
-  }
-  return row;
-}
 
 function Admin() {
   const status = useServerFn(adminStatus);
   const login = useServerFn(adminLogin);
   const [unlocked, setUnlocked] = useState<boolean | null>(null);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -114,10 +159,15 @@ function Admin() {
   async function onLogin(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    const res = await login({ data: { password } });
+    setError("");
+    try {
+      const res = await login({ data: { password, email } });
+      if (res.ok) setUnlocked(true);
+      else setError("Dados de acesso incorretos.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Não foi possível entrar.");
+    }
     setBusy(false);
-    if (res.ok) setUnlocked(true);
-    else setError(true);
   }
 
   if (unlocked === null) {
@@ -134,11 +184,22 @@ function Admin() {
         <PageHeader
           eyebrow="Área restrita"
           title="Painel Administrativo"
-          description="Entre com a senha da equipe para gerenciar o conteúdo do site."
+          description="Entre com seus dados de acesso para gerenciar o site."
         />
         <section className="px-6 pb-24">
           <form onSubmit={onLogin} className="card-lux mx-auto max-w-md">
-            <label className="text-sm text-muted-foreground" htmlFor="admin-password">
+            <label className="text-sm text-muted-foreground" htmlFor="admin-email">
+              E-mail (deixe vazio para usar a senha master)
+            </label>
+            <input
+              id="admin-email"
+              type="email"
+              autoComplete="username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={inputClass}
+            />
+            <label className="mt-5 block text-sm text-muted-foreground" htmlFor="admin-password">
               Senha
             </label>
             <input
@@ -148,11 +209,11 @@ function Admin() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setError(false);
+                setError("");
               }}
               className={inputClass}
             />
-            {error ? <p className="mt-3 text-sm text-red-400">Senha incorreta.</p> : null}
+            {error ? <p className="mt-3 text-sm text-red-400">{error}</p> : null}
             <button type="submit" disabled={busy} className="btn-gold mt-6 w-full">
               {busy ? "Entrando..." : "Entrar"}
             </button>
@@ -166,44 +227,56 @@ function Admin() {
 }
 
 function Dashboard({ onLogout }: { onLogout: () => void }) {
-  const list = useServerFn(adminList);
   const logout = useServerFn(adminLogout);
-  const [tab, setTab] = useState<Table>("service_times");
-  const [rows, setRows] = useState<Row[]>([]);
-  const [loading, setLoading] = useState(true);
+  const notificationsFn = useServerFn(adminNotifications);
+  const readFn = useServerFn(adminReadNotifications);
+  const backupFn = useServerFn(adminBackup);
 
-  const current = tabs.find((t) => t.id === tab)!;
-
-  const refresh = useCallback(async () => {
-    setLoading(true);
-    const data = await list({ data: { table: tab } });
-    setRows(data);
-    setLoading(false);
-  }, [list, tab]);
+  const [section, setSection] = useState("dashboard");
+  const [unread, setUnread] = useState(0);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    void notificationsFn().then((r) => setUnread(r.unread));
+  }, [notificationsFn]);
+
+  const nav = [
+    { id: "dashboard", label: "Visão geral" },
+    { id: "submissions", label: "Formulários" },
+    { id: "prayers", label: "Pedidos de oração" },
+    { id: "content", label: "Conteúdo do site" },
+    ...crudSections.map((s) => ({ id: s.id, label: s.label })),
+  ];
+
+  async function downloadBackup() {
+    const data = await backupFn();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `born-church-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <>
       <PageHeader
         eyebrow="Área restrita"
         title="Painel Administrativo"
-        description="Gerencie horários de culto, eventos, avisos e pregações do site."
+        description="Gerencie conteúdo, eventos, formulários e pedidos de oração do site."
       />
 
       <section className="px-6 pb-24">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap gap-2">
-              {tabs.map((t) => (
+              {nav.map((t) => (
                 <button
                   key={t.id}
                   type="button"
-                  onClick={() => setTab(t.id)}
+                  onClick={() => setSection(t.id)}
                   className={
-                    t.id === tab
+                    t.id === section
                       ? "rounded-full border border-gold bg-gold/10 px-5 py-2 text-sm text-gold"
                       : "rounded-full border border-border px-5 py-2 text-sm text-muted-foreground transition-colors hover:text-gold"
                   }
@@ -212,43 +285,40 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              onClick={async () => {
-                await logout();
-                onLogout();
-              }}
-              className="btn-outline"
-            >
-              <LogOut className="h-4 w-4" /> Sair
-            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                className="btn-outline"
+                onClick={async () => {
+                  await readFn();
+                  setUnread(0);
+                  setSection("submissions");
+                }}
+              >
+                <Bell className="h-4 w-4" /> {unread > 0 ? `${unread} novos` : "Notificações"}
+              </button>
+              <button type="button" className="btn-outline" onClick={() => void downloadBackup()}>
+                <Download className="h-4 w-4" /> Backup
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  await logout();
+                  onLogout();
+                }}
+                className="btn-outline"
+              >
+                <LogOut className="h-4 w-4" /> Sair
+              </button>
+            </div>
           </div>
 
-          <div className="mt-10 space-y-6">
-            <RowEditor
-              key={`new-${tab}`}
-              table={tab}
-              fields={current.fields}
-              row={emptyRow(current.fields)}
-              isNew
-              onSaved={refresh}
-            />
-
-            {loading ? (
-              <p className="text-sm text-muted-foreground">Carregando...</p>
-            ) : rows.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Nenhum registro ainda.</p>
-            ) : (
-              rows.map((row) => (
-                <RowEditor
-                  key={String(row["id"])}
-                  table={tab}
-                  fields={current.fields}
-                  row={row}
-                  onSaved={refresh}
-                />
-              ))
-            )}
+          <div className="mt-10">
+            {section === "dashboard" ? <DashboardPanel onNavigate={setSection} /> : null}
+            {section === "submissions" ? <SubmissionsPanel /> : null}
+            {section === "prayers" ? <PrayersPanel /> : null}
+            {section === "content" ? <ContentPanel /> : null}
+            {crudSections.map((s) => (s.id === section ? <CrudPanel key={s.id} section={s} /> : null))}
           </div>
         </div>
       </section>
@@ -256,155 +326,50 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   );
 }
 
-function toInputValue(field: Field, value: unknown): string {
-  if (value === null || value === undefined) return "";
-  if (field.type === "list") return Array.isArray(value) ? value.join(", ") : String(value);
-  if (field.type === "datetime") {
-    const d = new Date(String(value));
-    if (Number.isNaN(d.getTime())) return "";
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  }
-  return String(value);
-}
+function CrudPanel({ section }: { section: CrudSection }) {
+  const list = useServerFn(adminList);
+  const [rows, setRows] = useState<Row[]>([]);
+  const [loading, setLoading] = useState(true);
 
-function RowEditor({
-  table,
-  fields,
-  row,
-  isNew,
-  onSaved,
-}: {
-  table: Table;
-  fields: Field[];
-  row: Row;
-  isNew?: boolean;
-  onSaved: () => void | Promise<void>;
-}) {
-  const save = useServerFn(adminSave);
-  const remove = useServerFn(adminDelete);
-  const [values, setValues] = useState<Record<string, string | boolean>>(() => {
-    const initial: Record<string, string | boolean> = {};
-    for (const f of fields) {
-      initial[f.name] =
-        f.type === "bool" ? Boolean(row[f.name]) : toInputValue(f, row[f.name]);
-    }
-    return initial;
-  });
-  const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState("");
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    const data = await list({ data: { table: section.table } });
+    setRows(data);
+    setLoading(false);
+  }, [list, section.table]);
 
-  async function onSave() {
-    setBusy(true);
-    setMessage("");
-    const payload: Row = {};
-    for (const f of fields) {
-      const v = values[f.name];
-      if (f.type === "bool") payload[f.name] = Boolean(v);
-      else if (f.type === "number") payload[f.name] = Number(v || 0);
-      else if (f.type === "list")
-        payload[f.name] = String(v)
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-      else if (f.type === "datetime" || f.type === "date")
-        payload[f.name] = v ? new Date(String(v)).toISOString() : null;
-      else payload[f.name] = String(v);
-    }
-    if (table === "sermons" && payload["preached_on"]) {
-      payload["preached_on"] = String(payload["preached_on"]).slice(0, 10);
-    }
-    try {
-      await save({
-        data: isNew
-          ? { table, values: payload }
-          : { table, id: String(row["id"]), values: payload },
-      });
-      setMessage("Salvo!");
-      if (isNew) {
-        const cleared: Record<string, string | boolean> = {};
-        for (const f of fields) cleared[f.name] = f.type === "bool" ? true : "";
-        setValues(cleared);
-      }
-      await onSaved();
-    } catch {
-      setMessage("Não foi possível salvar.");
-    }
-    setBusy(false);
-  }
-
-  async function onDelete() {
-    setBusy(true);
-    await remove({ data: { table, id: String(row["id"]) } });
-    await onSaved();
-    setBusy(false);
-  }
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
 
   return (
-    <article className="card-lux">
-      <p className="text-xs uppercase tracking-[0.3em] text-gold">
-        {isNew ? "Novo registro" : String(row["title"] ?? "Registro")}
-      </p>
+    <div className="space-y-6">
+      <RowEditor
+        key={`new-${section.id}`}
+        table={section.table}
+        fields={section.fields}
+        row={emptyRow(section.fields)}
+        isNew
+        onSaved={refresh}
+        {...(section.titleField ? { titleField: section.titleField } : {})}
+      />
 
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
-        {fields.map((f) => (
-          <div key={f.name} className={f.type === "textarea" ? "sm:col-span-2" : ""}>
-            <label className="text-sm text-muted-foreground" htmlFor={`${row["id"] ?? "new"}-${f.name}`}>
-              {f.label}
-            </label>
-            {f.type === "bool" ? (
-              <div className="mt-2">
-                <input
-                  id={`${row["id"] ?? "new"}-${f.name}`}
-                  type="checkbox"
-                  checked={Boolean(values[f.name])}
-                  onChange={(e) =>
-                    setValues((v) => ({ ...v, [f.name]: e.target.checked }))
-                  }
-                  className="h-5 w-5 accent-[var(--gold)]"
-                />
-              </div>
-            ) : f.type === "textarea" ? (
-              <textarea
-                id={`${row["id"] ?? "new"}-${f.name}`}
-                rows={3}
-                value={String(values[f.name] ?? "")}
-                onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                className={inputClass}
-              />
-            ) : (
-              <input
-                id={`${row["id"] ?? "new"}-${f.name}`}
-                type={
-                  f.type === "number"
-                    ? "number"
-                    : f.type === "date"
-                      ? "date"
-                      : f.type === "datetime"
-                        ? "datetime-local"
-                        : "text"
-                }
-                value={String(values[f.name] ?? "")}
-                onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                className={inputClass}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center gap-3">
-        <button type="button" onClick={onSave} disabled={busy} className="btn-gold">
-          {isNew ? <Plus className="h-4 w-4" /> : <Save className="h-4 w-4" />}
-          {isNew ? "Adicionar" : "Salvar"}
-        </button>
-        {!isNew ? (
-          <button type="button" onClick={onDelete} disabled={busy} className="btn-outline">
-            <Trash2 className="h-4 w-4" /> Excluir
-          </button>
-        ) : null}
-        {message ? <span className="text-sm text-gold">{message}</span> : null}
-      </div>
-    </article>
+      {loading ? (
+        <p className="text-sm text-muted-foreground">Carregando...</p>
+      ) : rows.length === 0 ? (
+        <p className="text-sm text-muted-foreground">Nenhum registro ainda.</p>
+      ) : (
+        rows.map((row) => (
+          <RowEditor
+            key={String(row["id"])}
+            table={section.table}
+            fields={section.fields}
+            row={row}
+            onSaved={refresh}
+            {...(section.titleField ? { titleField: section.titleField } : {})}
+          />
+        ))
+      )}
+    </div>
   );
 }

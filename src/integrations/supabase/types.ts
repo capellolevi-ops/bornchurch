@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_notifications: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          read: boolean
+          title: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind: string
+          read?: boolean
+          title: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          read?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
+      admin_users: {
+        Row: {
+          active: boolean
+          created_at: string
+          email: string
+          id: string
+          name: string
+          password_hash: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          password_hash: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          password_hash?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       announcements: {
         Row: {
           body: string
@@ -47,6 +107,45 @@ export type Database = {
         }
         Relationships: []
       }
+      banners: {
+        Row: {
+          active: boolean
+          button_label: string
+          created_at: string
+          ends_at: string | null
+          id: string
+          image_url: string | null
+          link: string
+          starts_at: string | null
+          text: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          button_label?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string
+          starts_at?: string | null
+          text: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          button_label?: string
+          created_at?: string
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          link?: string
+          starts_at?: string | null
+          text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           created_at: string
@@ -54,6 +153,7 @@ export type Database = {
           featured: boolean
           id: string
           image_url: string | null
+          link: string
           location: string
           published: boolean
           starts_at: string
@@ -66,6 +166,7 @@ export type Database = {
           featured?: boolean
           id?: string
           image_url?: string | null
+          link?: string
           location?: string
           published?: boolean
           starts_at: string
@@ -78,11 +179,87 @@ export type Database = {
           featured?: boolean
           id?: string
           image_url?: string | null
+          link?: string
           location?: string
           published?: boolean
           starts_at?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      gallery_photos: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          published: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      prayer_requests: {
+        Row: {
+          admin_reply: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string
+          prayer_count: number
+          status: string
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          admin_reply?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message: string
+          name?: string
+          phone?: string
+          prayer_count?: number
+          status?: string
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          admin_reply?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string
+          prayer_count?: number
+          status?: string
+          updated_at?: string
+          visibility?: string
         }
         Relationships: []
       }
@@ -158,12 +335,78 @@ export type Database = {
         }
         Relationships: []
       }
+      site_content: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
+      submissions: {
+        Row: {
+          created_at: string
+          email: string
+          form_key: string
+          form_label: string
+          id: string
+          message: string
+          name: string
+          needs_review: boolean
+          notes: string
+          payload: Json
+          phone: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          form_key: string
+          form_label?: string
+          id?: string
+          message?: string
+          name?: string
+          needs_review?: boolean
+          notes?: string
+          payload?: Json
+          phone?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          form_key?: string
+          form_label?: string
+          id?: string
+          message?: string
+          name?: string
+          needs_review?: boolean
+          notes?: string
+          payload?: Json
+          phone?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_prayer_count: { Args: { _id: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never

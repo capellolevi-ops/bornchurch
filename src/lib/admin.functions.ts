@@ -293,7 +293,7 @@ export const adminUpdateSubmission = createServerFn({ method: "POST" })
     const patch: Record<string, string> = {};
     if (data.status) patch["status"] = data.status;
     if (data.notes !== undefined) patch["notes"] = data.notes;
-    const { error } = await client.from("submissions").update(patch).eq("id", data.id);
+    const { error } = await client.from("submissions").update(patch as never).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });
@@ -342,7 +342,7 @@ export const adminUpdatePrayer = createServerFn({ method: "POST" })
     if (data.status) patch["status"] = data.status;
     if (data.visibility) patch["visibility"] = data.visibility;
     if (data.admin_reply !== undefined) patch["admin_reply"] = data.admin_reply;
-    const { error } = await client.from("prayer_requests").update(patch).eq("id", data.id);
+    const { error } = await client.from("prayer_requests").update(patch as never).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });

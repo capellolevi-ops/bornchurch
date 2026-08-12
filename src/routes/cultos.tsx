@@ -42,7 +42,9 @@ export const Route = createFileRoute("/cultos")({
 function Cultos() {
   const { serviceTimes } = Route.useLoaderData();
   const list: Array<{ day: string; title: string; times: string[]; description: string }> =
-    serviceTimes.length > 0 ? serviceTimes : [...services];
+    serviceTimes.length > 0
+      ? serviceTimes
+      : services.map((s) => ({ ...s, times: [...s.times] }));
 
   return (
     <>

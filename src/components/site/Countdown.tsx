@@ -125,13 +125,15 @@ export function ServicesCountdown() {
   const [list, setList] = useState<Array<{ title: string; day: string; date: number }>>([]);
 
   useEffect(() => {
-    const build = () =>
-      setList(
-        services
-          .map((s) => ({ title: s.title, day: s.day, date: nextOccurrence(s.day, s.times) }))
-          .filter((s): s is { title: string; day: string; date: number } => s.date !== null)
-          .sort((a, b) => a.date - b.date),
-      );
+    const build = () => {
+      const next: Array<{ title: string; day: string; date: number }> = [];
+      for (const s of services) {
+        const date = nextOccurrence(s.day, s.times);
+        if (date !== null) next.push({ title: s.title, day: s.day, date });
+      }
+      next.sort((a, b) => a.date - b.date);
+      setList(next);
+    };
     build();
     const id = window.setInterval(build, 60_000);
     return () => window.clearInterval(id);

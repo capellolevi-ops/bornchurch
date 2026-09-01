@@ -102,6 +102,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  loader: async () => {
+    try {
+      const [content, banners] = await Promise.all([getSiteContent(), getActiveBanners()]);
+      return { content, banners };
+    } catch {
+      return { content: {} as Awaited<ReturnType<typeof getSiteContent>>, banners: [] };
+    }
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

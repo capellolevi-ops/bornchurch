@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -15,6 +16,9 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
+import { TopBanner } from "@/components/site/TopBanner";
+import { MaintenanceScreen } from "@/components/site/MaintenanceScreen";
+import { getActiveBanners, getSiteContent } from "@/lib/public.functions";
 
 function NotFoundComponent() {
   return (

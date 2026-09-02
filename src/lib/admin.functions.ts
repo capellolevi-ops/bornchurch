@@ -10,11 +10,14 @@ export type AdminRole = "admin" | "editor" | "moderator";
 const INACTIVITY_MS = 2 * 60 * 60 * 1000; // 2 horas sem uso encerram a sessão
 
 function sessionConfig() {
+  // Em desenvolvimento (http://localhost) o cookie "secure" é rejeitado pelo
+  // navegador, o que faria a sessão do painel nunca persistir.
+  const secure = process.env["NODE_ENV"] === "production";
   return {
     password: process.env["ADMIN_SESSION_SECRET"]!,
     name: "born-admin",
     maxAge: 60 * 60 * 12,
-    cookie: { httpOnly: true, secure: true, sameSite: "lax" as const, path: "/" },
+    cookie: { httpOnly: true, secure, sameSite: "lax" as const, path: "/" },
   };
 }
 

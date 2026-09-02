@@ -199,6 +199,7 @@ export const navItems = [
   { label: "Próximo Passo", to: "/proximo-passo" },
   { label: "Servir", to: "/servir" },
   { label: "Conte-nos", to: "/conte-nos" },
+  { label: "Oração", to: "/oracao" },
   { label: "Ofertas", to: "/ofertas" },
   { label: "Novo aqui?", to: "/novo-aqui" },
   { label: "Contato", to: "/contato" },

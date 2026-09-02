@@ -10,6 +10,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { VerseOfDay } from "@/components/site/VerseOfDay";
 import { photos } from "@/config/photos";
 import { ministries, services, siteConfig } from "@/config/site";
+import { getUpcomingEvents } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -44,10 +45,28 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  loader: async () => {
+    try {
+      const events = await getUpcomingEvents();
+      return { nextEvent: events[0] ?? null };
+    } catch {
+      return { nextEvent: null };
+    }
+  },
+  errorComponent: () => null,
   component: Home,
 });
 
 function Home() {
+  const { nextEvent } = Route.useLoaderData();
+  const eventTarget = nextEvent
+    ? {
+        title: nextEvent.title,
+        location: nextEvent.location || siteConfig.contact.address,
+        date: new Date(nextEvent.starts_at).getTime(),
+      }
+    : null;
+
   return (
     <>
       {/* Hero */}
@@ -91,7 +110,7 @@ function Home() {
       {/* Contagem regressiva */}
       <section className="px-6 pt-16">
         <Reveal className="mx-auto max-w-6xl">
-          <Countdown />
+          <Countdown event={eventTarget} />
         </Reveal>
       </section>
 

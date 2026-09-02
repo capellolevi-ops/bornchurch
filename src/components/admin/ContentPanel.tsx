@@ -76,6 +76,7 @@ export function ContentPanel() {
   }
 
   if (loading) return <p className="text-sm text-muted-foreground">Carregando...</p>;
+  if (error) return <p className="text-sm text-destructive">{error} — faça login novamente.</p>;
 
   return (
     <div className="space-y-6">

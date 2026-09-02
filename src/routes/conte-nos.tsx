@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -6,6 +7,7 @@ import { z } from "zod";
 import { Field, fieldClass } from "@/components/site/Field";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { submitForm } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/conte-nos")({
   head: () => ({
@@ -36,9 +38,11 @@ const schema = z.object({
 
 function ConteNos() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitForm);
   const err = (k: string) => errors[k];
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form));
@@ -52,10 +56,28 @@ function ConteNos() {
     }
 
     setErrors({});
-    form.reset();
-    toast.success("Mensagem enviada!", {
-      description: "Obrigado por compartilhar. Nossa equipe vai retornar em breve.",
-    });
+    setSending(true);
+    try {
+      await send({
+        data: {
+          formKey: "conte-nos",
+          formLabel: "Conte-nos sua história",
+          name: result.data.nome,
+          phone: result.data.telefone,
+          email: result.data.email,
+          message: result.data.mensagem,
+          payload: { assunto: result.data.assunto },
+        },
+      });
+      form.reset();
+      toast.success("Mensagem enviada!", {
+        description: "Obrigado por compartilhar. Nossa equipe vai retornar em breve.",
+      });
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -111,8 +133,8 @@ function ConteNos() {
                 placeholder="Escreva aqui..."
               />
             </Field>
-            <button type="submit" className="btn-gold mt-2 w-full">
-              Enviar
+            <button type="submit" disabled={sending} className="btn-gold mt-2 w-full">
+              {sending ? "Enviando..." : "Enviar"}
             </button>
           </form>
         </Reveal>

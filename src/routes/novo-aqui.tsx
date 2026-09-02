@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -6,6 +7,7 @@ import { z } from "zod";
 import { Field, fieldClass } from "@/components/site/Field";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { submitForm } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/novo-aqui")({
   head: () => ({
@@ -38,9 +40,11 @@ const schema = z.object({
 
 function NovoAqui() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitForm);
   const err = (k: string) => errors[k];
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form));
@@ -54,10 +58,33 @@ function NovoAqui() {
     }
 
     setErrors({});
-    form.reset();
-    toast.success("Visita planejada!", {
-      description: "Que alegria! Vamos entrar em contato para receber você.",
-    });
+    setSending(true);
+    try {
+      await send({
+        data: {
+          formKey: "novo-aqui",
+          formLabel: "Planeje sua visita",
+          name: result.data.nome,
+          phone: result.data.telefone,
+          email: result.data.email,
+          message: result.data.oracao ?? "",
+          payload: {
+            cidade: result.data.cidade,
+            sozinho: result.data.sozinho,
+            pessoas: result.data.pessoas,
+            origem: result.data.origem,
+          },
+        },
+      });
+      form.reset();
+      toast.success("Visita planejada!", {
+        description: "Que alegria! Vamos entrar em contato para receber você.",
+      });
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -134,8 +161,8 @@ function NovoAqui() {
                 placeholder="Como podemos orar por você?"
               />
             </Field>
-            <button type="submit" className="btn-gold mt-2 w-full">
-              Quero Planejar Minha Visita
+            <button type="submit" disabled={sending} className="btn-gold mt-2 w-full">
+              {sending ? "Enviando..." : "Quero Planejar Minha Visita"}
             </button>
           </form>
         </Reveal>

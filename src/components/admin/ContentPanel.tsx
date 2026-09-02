@@ -56,11 +56,13 @@ export function ContentPanel() {
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState("");
 
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    void loadFn().then((data) => {
-      setContent(data);
-      setLoading(false);
-    });
+    void loadFn()
+      .then((data) => setContent(data))
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : "Erro ao carregar"))
+      .finally(() => setLoading(false));
   }, [loadFn]);
 
   function set(groupKey: string, field: string, value: string) {

@@ -18,6 +18,7 @@ import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
+import { Route as OracaoRouteImport } from './routes/oracao'
 import { Route as ProximoPassoRouteImport } from './routes/proximo-passo'
 import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -67,6 +68,11 @@ const OfertasRoute = OfertasRouteImport.update({
   path: '/ofertas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OracaoRoute = OracaoRouteImport.update({
+  id: '/oracao',
+  path: '/oracao',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProximoPassoRoute = ProximoPassoRouteImport.update({
   id: '/proximo-passo',
   path: '/proximo-passo',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
+  '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/ministerios'
     | '/novo-aqui'
     | '/ofertas'
+    | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   MinisteriosRoute: typeof MinisteriosRoute
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
+  OracaoRoute: typeof OracaoRoute
   ProximoPassoRoute: typeof ProximoPassoRoute
   ServirRoute: typeof ServirRoute
   SobreRoute: typeof SobreRoute
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OfertasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/oracao': {
+      id: '/oracao'
+      path: '/oracao'
+      fullPath: '/oracao'
+      preLoaderRoute: typeof OracaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/proximo-passo': {
       id: '/proximo-passo'
       path: '/proximo-passo'
@@ -285,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   MinisteriosRoute: MinisteriosRoute,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
+  OracaoRoute: OracaoRoute,
   ProximoPassoRoute: ProximoPassoRoute,
   ServirRoute: ServirRoute,
   SobreRoute: SobreRoute,

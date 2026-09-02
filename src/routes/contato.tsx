@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
@@ -7,6 +8,7 @@ import { z } from "zod";
 import { Field, fieldClass } from "@/components/site/Field";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { submitForm } from "@/lib/public.functions";
 import { siteConfig } from "@/config/site";
 
 export const Route = createFileRoute("/contato")({
@@ -35,9 +37,11 @@ const schema = z.object({
 
 function Contato() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitForm);
   const err = (k: string) => errors[k];
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const result = schema.safeParse(Object.fromEntries(new FormData(form)));
@@ -48,8 +52,24 @@ function Contato() {
       return;
     }
     setErrors({});
-    form.reset();
-    toast.success("Mensagem enviada!", { description: "Retornaremos o mais breve possível." });
+    setSending(true);
+    try {
+      await send({
+        data: {
+          formKey: "contato",
+          formLabel: "Contato",
+          name: result.data.nome,
+          email: result.data.email,
+          message: result.data.mensagem,
+        },
+      });
+      form.reset();
+      toast.success("Mensagem enviada!", { description: "Retornaremos o mais breve possível." });
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -133,8 +153,8 @@ function Contato() {
                   placeholder="Como podemos ajudar?"
                 />
               </Field>
-              <button type="submit" className="btn-gold mt-2 w-full">
-                Enviar
+              <button type="submit" disabled={sending} className="btn-gold mt-2 w-full">
+                {sending ? "Enviando..." : "Enviar"}
               </button>
             </form>
           </Reveal>

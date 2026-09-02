@@ -4,6 +4,7 @@ import { MapPin } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
 import { JoinButton } from "@/components/site/JoinButton";
+import { ServicesCountdown } from "@/components/site/Countdown";
 import { services, siteConfig } from "@/config/site";
 import { getServiceTimes } from "@/lib/content.functions";
 
@@ -53,6 +54,15 @@ function Cultos() {
         title="Nossos Cultos"
         description="Reserve um tempo para estar conosco. Todos são bem-vindos, em qualquer horário."
       />
+
+      <section className="px-6 pt-10">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-6 text-center text-xs uppercase tracking-[0.35em] text-gold">
+            Falta pouco para o próximo culto
+          </h2>
+          <ServicesCountdown />
+        </div>
+      </section>
 
       <section className="px-6 py-20">
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">

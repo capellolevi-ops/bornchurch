@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -6,6 +7,7 @@ import { z } from "zod";
 import { Field, fieldClass } from "@/components/site/Field";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { submitForm } from "@/lib/public.functions";
 import { serveAreas } from "@/config/site";
 
 export const Route = createFileRoute("/servir")({
@@ -44,11 +46,13 @@ function Servir() {
   const [areaId, setAreaId] = useState<string>("");
   const [role, setRole] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitForm);
   const err = (k: string) => errors[k];
 
   const area = serveAreas.find((a) => a.id === areaId);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const result = schema.safeParse({
@@ -65,12 +69,30 @@ function Servir() {
     }
 
     setErrors({});
-    form.reset();
-    setAreaId("");
-    setRole("");
-    toast.success("Inscrição enviada!", {
-      description: "Que alegria! Nossa equipe vai entrar em contato com você.",
-    });
+    setSending(true);
+    try {
+      await send({
+        data: {
+          formKey: "servir",
+          formLabel: "Quero Servir",
+          name: result.data.nome,
+          phone: result.data.telefone,
+          email: result.data.email,
+          message: result.data.experiencia ?? "",
+          payload: { area: area?.label ?? areaId, funcao: role },
+        },
+      });
+      form.reset();
+      setAreaId("");
+      setRole("");
+      toast.success("Inscrição enviada!", {
+        description: "Que alegria! Nossa equipe vai entrar em contato com você.",
+      });
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -176,8 +198,8 @@ function Servir() {
               />
             </Field>
 
-            <button type="submit" className="btn-gold mt-2 w-full">
-              Quero Servir
+            <button type="submit" disabled={sending} className="btn-gold mt-2 w-full">
+              {sending ? "Enviando..." : "Quero Servir"}
             </button>
           </form>
         </Reveal>

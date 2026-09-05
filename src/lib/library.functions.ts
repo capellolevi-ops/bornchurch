@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Album, Artist, Track } from "@/lib/music.functions";
 
 /**
  * Biblioteca do usuário: favoritos, artistas seguidos, álbuns salvos,
@@ -61,18 +62,18 @@ export const getMyLibrary = createServerFn({ method: "GET" })
         .limit(60),
     ]);
 
-    const pick = <T,>(rows: unknown[] | null, key: string) =>
+    const pick = <T,>(rows: unknown[] | null, key: string): T[] =>
       (rows ?? [])
-        .map((r) => (r as Record<string, T | null>)[key])
+        .map((r) => (r as Record<string, unknown>)[key] as T | null)
         .filter((v): v is T => Boolean(v));
 
     return {
       profile: profile.data,
-      favorites: pick<Record<string, unknown>>(favorites.data, "music_tracks"),
-      artists: pick<Record<string, unknown>>(artists.data, "music_artists"),
-      albums: pick<Record<string, unknown>>(albums.data, "music_albums"),
+      favorites: pick<Track>(favorites.data, "music_tracks"),
+      artists: pick<Artist>(artists.data, "music_artists"),
+      albums: pick<Album>(albums.data, "music_albums"),
       playlists: playlists.data ?? [],
-      history: pick<Record<string, unknown>>(history.data, "music_tracks"),
+      history: pick<Track>(history.data, "music_tracks"),
     };
   });
 
@@ -99,22 +100,15 @@ export const toggleSave = createServerFn({ method: "POST" })
   .inputValidator((data: { kind: "track" | "artist" | "album"; id: string; on: boolean }) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    const map = {
-      track: { table: "user_favorite_tracks" as const, column: "track_id" as const },
-      artist: { table: "user_followed_artists" as const, column: "artist_id" as const },
-      album: { table: "user_saved_albums" as const, column: "album_id" as const },
-    };
-    const { table, column } = map[data.kind];
-    if (data.on) {
-      const { error } = await supabase.from(table).upsert({ user_id: userId, [column]: data.id });
-      if (error) throw new Error(error.message);
+    if (data.kind === "track") {
+      if (data.on) await supabase.from("user_favorite_tracks").upsert({ user_id: userId, track_id: data.id });
+      else await supabase.from("user_favorite_tracks").delete().eq("user_id", userId).eq("track_id", data.id);
+    } else if (data.kind === "artist") {
+      if (data.on) await supabase.from("user_followed_artists").upsert({ user_id: userId, artist_id: data.id });
+      else await supabase.from("user_followed_artists").delete().eq("user_id", userId).eq("artist_id", data.id);
     } else {
-      const { error } = await supabase
-        .from(table)
-        .delete()
-        .eq("user_id", userId)
-        .eq(column, data.id);
-      if (error) throw new Error(error.message);
+      if (data.on) await supabase.from("user_saved_albums").upsert({ user_id: userId, album_id: data.id });
+      else await supabase.from("user_saved_albums").delete().eq("user_id", userId).eq("album_id", data.id);
     }
     return { ok: true as const, on: data.on };
   });

@@ -24,6 +24,7 @@ import { Route as ProximoPassoRouteImport } from './routes/proximo-passo'
 import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as MusicaIndexRouteImport } from './routes/musica.index'
+import { Route as MusicaBuscaRouteImport } from './routes/musica.busca'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -100,6 +101,11 @@ const MusicaIndexRoute = MusicaIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MusicaRoute,
 } as any)
+const MusicaBuscaRoute = MusicaBuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => MusicaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/busca': typeof MusicaBuscaRoute
   '/musica/': typeof MusicaIndexRoute
 }
 export interface FileRoutesByTo {
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/busca': typeof MusicaBuscaRoute
   '/musica': typeof MusicaIndexRoute
 }
 export interface FileRoutesById {
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/busca': typeof MusicaBuscaRoute
   '/musica/': typeof MusicaIndexRoute
 }
 export interface FileRouteTypes {
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/busca'
     | '/musica/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/busca'
     | '/musica'
   id:
     | '__root__'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/busca'
     | '/musica/'
   fileRoutesById: FileRoutesById
 }
@@ -329,14 +341,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MusicaIndexRouteImport
       parentRoute: typeof MusicaRoute
     }
+    '/musica/busca': {
+      id: '/musica/busca'
+      path: '/busca'
+      fullPath: '/musica/busca'
+      preLoaderRoute: typeof MusicaBuscaRouteImport
+      parentRoute: typeof MusicaRoute
+    }
   }
 }
 
 interface MusicaRouteChildren {
+  MusicaBuscaRoute: typeof MusicaBuscaRoute
   MusicaIndexRoute: typeof MusicaIndexRoute
 }
 
 const MusicaRouteChildren: MusicaRouteChildren = {
+  MusicaBuscaRoute: MusicaBuscaRoute,
   MusicaIndexRoute: MusicaIndexRoute,
 }
 

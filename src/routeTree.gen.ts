@@ -16,12 +16,20 @@ import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
+import { Route as MusicaRouteImport } from './routes/musica'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as OracaoRouteImport } from './routes/oracao'
 import { Route as ProximoPassoRouteImport } from './routes/proximo-passo'
 import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as MusicaIndexRouteImport } from './routes/musica.index'
+import { Route as MusicaBibliotecaRouteImport } from './routes/musica.biblioteca'
+import { Route as MusicaBuscaRouteImport } from './routes/musica.busca'
+import { Route as MusicaAlbumSlugRouteImport } from './routes/musica.album.$slug'
+import { Route as MusicaArtistaSlugRouteImport } from './routes/musica.artista.$slug'
+import { Route as MusicaFaixaSlugRouteImport } from './routes/musica.faixa.$slug'
+import { Route as MusicaPlaylistSlugRouteImport } from './routes/musica.playlist.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +66,11 @@ const MinisteriosRoute = MinisteriosRouteImport.update({
   path: '/ministerios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MusicaRoute = MusicaRouteImport.update({
+  id: '/musica',
+  path: '/musica',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NovoAquiRoute = NovoAquiRouteImport.update({
   id: '/novo-aqui',
   path: '/novo-aqui',
@@ -88,6 +101,41 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MusicaIndexRoute = MusicaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaBibliotecaRoute = MusicaBibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaBuscaRoute = MusicaBuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaAlbumSlugRoute = MusicaAlbumSlugRouteImport.update({
+  id: '/album/$slug',
+  path: '/album/$slug',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaArtistaSlugRoute = MusicaArtistaSlugRouteImport.update({
+  id: '/artista/$slug',
+  path: '/artista/$slug',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaFaixaSlugRoute = MusicaFaixaSlugRouteImport.update({
+  id: '/faixa/$slug',
+  path: '/faixa/$slug',
+  getParentRoute: () => MusicaRoute,
+} as any)
+const MusicaPlaylistSlugRoute = MusicaPlaylistSlugRouteImport.update({
+  id: '/playlist/$slug',
+  path: '/playlist/$slug',
+  getParentRoute: () => MusicaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -97,12 +145,20 @@ export interface FileRoutesByFullPath {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
+  '/musica': typeof MusicaRouteWithChildren
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/biblioteca': typeof MusicaBibliotecaRoute
+  '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/': typeof MusicaIndexRoute
+  '/musica/album/$slug': typeof MusicaAlbumSlugRoute
+  '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
+  '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +174,13 @@ export interface FileRoutesByTo {
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/biblioteca': typeof MusicaBibliotecaRoute
+  '/musica/busca': typeof MusicaBuscaRoute
+  '/musica': typeof MusicaIndexRoute
+  '/musica/album/$slug': typeof MusicaAlbumSlugRoute
+  '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
+  '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -128,12 +191,20 @@ export interface FileRoutesById {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
+  '/musica': typeof MusicaRouteWithChildren
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/biblioteca': typeof MusicaBibliotecaRoute
+  '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/': typeof MusicaIndexRoute
+  '/musica/album/$slug': typeof MusicaAlbumSlugRoute
+  '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
+  '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -145,12 +216,20 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
+    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/biblioteca'
+    | '/musica/busca'
+    | '/musica/'
+    | '/musica/album/$slug'
+    | '/musica/artista/$slug'
+    | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +245,13 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/biblioteca'
+    | '/musica/busca'
+    | '/musica'
+    | '/musica/album/$slug'
+    | '/musica/artista/$slug'
+    | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   id:
     | '__root__'
     | '/'
@@ -175,12 +261,20 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
+    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/biblioteca'
+    | '/musica/busca'
+    | '/musica/'
+    | '/musica/album/$slug'
+    | '/musica/artista/$slug'
+    | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -191,6 +285,7 @@ export interface RootRouteChildren {
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
   MinisteriosRoute: typeof MinisteriosRoute
+  MusicaRoute: typeof MusicaRouteWithChildren
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
   OracaoRoute: typeof OracaoRoute
@@ -250,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinisteriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/musica': {
+      id: '/musica'
+      path: '/musica'
+      fullPath: '/musica'
+      preLoaderRoute: typeof MusicaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/novo-aqui': {
       id: '/novo-aqui'
       path: '/novo-aqui'
@@ -292,8 +394,80 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/musica/': {
+      id: '/musica/'
+      path: '/'
+      fullPath: '/musica/'
+      preLoaderRoute: typeof MusicaIndexRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/biblioteca': {
+      id: '/musica/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/musica/biblioteca'
+      preLoaderRoute: typeof MusicaBibliotecaRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/busca': {
+      id: '/musica/busca'
+      path: '/busca'
+      fullPath: '/musica/busca'
+      preLoaderRoute: typeof MusicaBuscaRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/album/$slug': {
+      id: '/musica/album/$slug'
+      path: '/album/$slug'
+      fullPath: '/musica/album/$slug'
+      preLoaderRoute: typeof MusicaAlbumSlugRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/artista/$slug': {
+      id: '/musica/artista/$slug'
+      path: '/artista/$slug'
+      fullPath: '/musica/artista/$slug'
+      preLoaderRoute: typeof MusicaArtistaSlugRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/faixa/$slug': {
+      id: '/musica/faixa/$slug'
+      path: '/faixa/$slug'
+      fullPath: '/musica/faixa/$slug'
+      preLoaderRoute: typeof MusicaFaixaSlugRouteImport
+      parentRoute: typeof MusicaRoute
+    }
+    '/musica/playlist/$slug': {
+      id: '/musica/playlist/$slug'
+      path: '/playlist/$slug'
+      fullPath: '/musica/playlist/$slug'
+      preLoaderRoute: typeof MusicaPlaylistSlugRouteImport
+      parentRoute: typeof MusicaRoute
+    }
   }
 }
+
+interface MusicaRouteChildren {
+  MusicaBibliotecaRoute: typeof MusicaBibliotecaRoute
+  MusicaBuscaRoute: typeof MusicaBuscaRoute
+  MusicaIndexRoute: typeof MusicaIndexRoute
+  MusicaAlbumSlugRoute: typeof MusicaAlbumSlugRoute
+  MusicaArtistaSlugRoute: typeof MusicaArtistaSlugRoute
+  MusicaFaixaSlugRoute: typeof MusicaFaixaSlugRoute
+  MusicaPlaylistSlugRoute: typeof MusicaPlaylistSlugRoute
+}
+
+const MusicaRouteChildren: MusicaRouteChildren = {
+  MusicaBibliotecaRoute: MusicaBibliotecaRoute,
+  MusicaBuscaRoute: MusicaBuscaRoute,
+  MusicaIndexRoute: MusicaIndexRoute,
+  MusicaAlbumSlugRoute: MusicaAlbumSlugRoute,
+  MusicaArtistaSlugRoute: MusicaArtistaSlugRoute,
+  MusicaFaixaSlugRoute: MusicaFaixaSlugRoute,
+  MusicaPlaylistSlugRoute: MusicaPlaylistSlugRoute,
+}
+
+const MusicaRouteWithChildren =
+  MusicaRoute._addFileChildren(MusicaRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -303,6 +477,7 @@ const rootRouteChildren: RootRouteChildren = {
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
   MinisteriosRoute: MinisteriosRoute,
+  MusicaRoute: MusicaRouteWithChildren,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
   OracaoRoute: OracaoRoute,

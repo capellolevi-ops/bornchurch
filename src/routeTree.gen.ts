@@ -23,6 +23,7 @@ import { Route as OracaoRouteImport } from './routes/oracao'
 import { Route as ProximoPassoRouteImport } from './routes/proximo-passo'
 import { Route as ServirRouteImport } from './routes/servir'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as MusicaIndexRouteImport } from './routes/musica.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -94,6 +95,11 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MusicaIndexRoute = MusicaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MusicaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,13 +109,14 @@ export interface FileRoutesByFullPath {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
-  '/musica': typeof MusicaRoute
+  '/musica': typeof MusicaRouteWithChildren
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/': typeof MusicaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -119,13 +126,13 @@ export interface FileRoutesByTo {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
-  '/musica': typeof MusicaRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica': typeof MusicaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -136,13 +143,14 @@ export interface FileRoutesById {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
-  '/musica': typeof MusicaRoute
+  '/musica': typeof MusicaRouteWithChildren
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
   '/proximo-passo': typeof ProximoPassoRoute
   '/servir': typeof ServirRoute
   '/sobre': typeof SobreRoute
+  '/musica/': typeof MusicaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +169,7 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -170,13 +179,13 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
-    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica'
   id:
     | '__root__'
     | '/'
@@ -193,6 +202,7 @@ export interface FileRouteTypes {
     | '/proximo-passo'
     | '/servir'
     | '/sobre'
+    | '/musica/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,7 +213,7 @@ export interface RootRouteChildren {
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
   MinisteriosRoute: typeof MinisteriosRoute
-  MusicaRoute: typeof MusicaRoute
+  MusicaRoute: typeof MusicaRouteWithChildren
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
   OracaoRoute: typeof OracaoRoute
@@ -312,8 +322,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/musica/': {
+      id: '/musica/'
+      path: '/'
+      fullPath: '/musica/'
+      preLoaderRoute: typeof MusicaIndexRouteImport
+      parentRoute: typeof MusicaRoute
+    }
   }
 }
+
+interface MusicaRouteChildren {
+  MusicaIndexRoute: typeof MusicaIndexRoute
+}
+
+const MusicaRouteChildren: MusicaRouteChildren = {
+  MusicaIndexRoute: MusicaIndexRoute,
+}
+
+const MusicaRouteWithChildren =
+  MusicaRoute._addFileChildren(MusicaRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -323,7 +351,7 @@ const rootRouteChildren: RootRouteChildren = {
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
   MinisteriosRoute: MinisteriosRoute,
-  MusicaRoute: MusicaRoute,
+  MusicaRoute: MusicaRouteWithChildren,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
   OracaoRoute: OracaoRoute,

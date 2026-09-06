@@ -16,6 +16,7 @@ import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
+import { Route as MusicaRouteImport } from './routes/musica'
 import { Route as NovoAquiRouteImport } from './routes/novo-aqui'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as OracaoRouteImport } from './routes/oracao'
@@ -58,6 +59,11 @@ const MinisteriosRoute = MinisteriosRouteImport.update({
   path: '/ministerios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MusicaRoute = MusicaRouteImport.update({
+  id: '/musica',
+  path: '/musica',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NovoAquiRoute = NovoAquiRouteImport.update({
   id: '/novo-aqui',
   path: '/novo-aqui',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
+  '/musica': typeof MusicaRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
+  '/musica': typeof MusicaRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/cultos': typeof CultosRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
+  '/musica': typeof MusicaRoute
   '/novo-aqui': typeof NovoAquiRoute
   '/ofertas': typeof OfertasRoute
   '/oracao': typeof OracaoRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
+    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
+    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/cultos'
     | '/mensagens'
     | '/ministerios'
+    | '/musica'
     | '/novo-aqui'
     | '/ofertas'
     | '/oracao'
@@ -191,6 +203,7 @@ export interface RootRouteChildren {
   CultosRoute: typeof CultosRoute
   MensagensRoute: typeof MensagensRoute
   MinisteriosRoute: typeof MinisteriosRoute
+  MusicaRoute: typeof MusicaRoute
   NovoAquiRoute: typeof NovoAquiRoute
   OfertasRoute: typeof OfertasRoute
   OracaoRoute: typeof OracaoRoute
@@ -250,6 +263,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinisteriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/musica': {
+      id: '/musica'
+      path: '/musica'
+      fullPath: '/musica'
+      preLoaderRoute: typeof MusicaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/novo-aqui': {
       id: '/novo-aqui'
       path: '/novo-aqui'
@@ -303,6 +323,7 @@ const rootRouteChildren: RootRouteChildren = {
   CultosRoute: CultosRoute,
   MensagensRoute: MensagensRoute,
   MinisteriosRoute: MinisteriosRoute,
+  MusicaRoute: MusicaRoute,
   NovoAquiRoute: NovoAquiRoute,
   OfertasRoute: OfertasRoute,
   OracaoRoute: OracaoRoute,

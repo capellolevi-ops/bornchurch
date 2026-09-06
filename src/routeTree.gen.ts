@@ -28,6 +28,7 @@ import { Route as MusicaBuscaRouteImport } from './routes/musica.busca'
 import { Route as MusicaAlbumSlugRouteImport } from './routes/musica.album.$slug'
 import { Route as MusicaArtistaSlugRouteImport } from './routes/musica.artista.$slug'
 import { Route as MusicaFaixaSlugRouteImport } from './routes/musica.faixa.$slug'
+import { Route as MusicaPlaylistSlugRouteImport } from './routes/musica.playlist.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +125,11 @@ const MusicaFaixaSlugRoute = MusicaFaixaSlugRouteImport.update({
   path: '/faixa/$slug',
   getParentRoute: () => MusicaRoute,
 } as any)
+const MusicaPlaylistSlugRoute = MusicaPlaylistSlugRouteImport.update({
+  id: '/playlist/$slug',
+  path: '/playlist/$slug',
+  getParentRoute: () => MusicaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
   '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
   '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
   '/musica/faixa/$slug': typeof MusicaFaixaSlugRoute
+  '/musica/playlist/$slug': typeof MusicaPlaylistSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
     | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
     | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   id:
     | '__root__'
     | '/'
@@ -251,6 +262,7 @@ export interface FileRouteTypes {
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
     | '/musica/faixa/$slug'
+    | '/musica/playlist/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -405,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MusicaFaixaSlugRouteImport
       parentRoute: typeof MusicaRoute
     }
+    '/musica/playlist/$slug': {
+      id: '/musica/playlist/$slug'
+      path: '/playlist/$slug'
+      fullPath: '/musica/playlist/$slug'
+      preLoaderRoute: typeof MusicaPlaylistSlugRouteImport
+      parentRoute: typeof MusicaRoute
+    }
   }
 }
 
@@ -414,6 +433,7 @@ interface MusicaRouteChildren {
   MusicaAlbumSlugRoute: typeof MusicaAlbumSlugRoute
   MusicaArtistaSlugRoute: typeof MusicaArtistaSlugRoute
   MusicaFaixaSlugRoute: typeof MusicaFaixaSlugRoute
+  MusicaPlaylistSlugRoute: typeof MusicaPlaylistSlugRoute
 }
 
 const MusicaRouteChildren: MusicaRouteChildren = {
@@ -422,6 +442,7 @@ const MusicaRouteChildren: MusicaRouteChildren = {
   MusicaAlbumSlugRoute: MusicaAlbumSlugRoute,
   MusicaArtistaSlugRoute: MusicaArtistaSlugRoute,
   MusicaFaixaSlugRoute: MusicaFaixaSlugRoute,
+  MusicaPlaylistSlugRoute: MusicaPlaylistSlugRoute,
 }
 
 const MusicaRouteWithChildren =

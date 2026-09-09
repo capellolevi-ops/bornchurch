@@ -26,6 +26,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as MusicaIndexRouteImport } from './routes/musica.index'
 import { Route as MusicaBibliotecaRouteImport } from './routes/musica.biblioteca'
 import { Route as MusicaBuscaRouteImport } from './routes/musica.busca'
+import { Route as MusicaFavoritasRouteImport } from './routes/musica.favoritas'
 import { Route as MusicaAlbumSlugRouteImport } from './routes/musica.album.$slug'
 import { Route as MusicaArtistaSlugRouteImport } from './routes/musica.artista.$slug'
 import { Route as MusicaFaixaSlugRouteImport } from './routes/musica.faixa.$slug'
@@ -116,6 +117,11 @@ const MusicaBuscaRoute = MusicaBuscaRouteImport.update({
   path: '/busca',
   getParentRoute: () => MusicaRoute,
 } as any)
+const MusicaFavoritasRoute = MusicaFavoritasRouteImport.update({
+  id: '/favoritas',
+  path: '/favoritas',
+  getParentRoute: () => MusicaRoute,
+} as any)
 const MusicaAlbumSlugRoute = MusicaAlbumSlugRouteImport.update({
   id: '/album/$slug',
   path: '/album/$slug',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica/': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica/': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica/'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica/'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -415,6 +427,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MusicaBuscaRouteImport
       parentRoute: typeof MusicaRoute
     }
+    '/musica/favoritas': {
+      id: '/musica/favoritas'
+      path: '/favoritas'
+      fullPath: '/musica/favoritas'
+      preLoaderRoute: typeof MusicaFavoritasRouteImport
+      parentRoute: typeof MusicaRoute
+    }
     '/musica/album/$slug': {
       id: '/musica/album/$slug'
       path: '/album/$slug'
@@ -449,6 +468,7 @@ declare module '@tanstack/react-router' {
 interface MusicaRouteChildren {
   MusicaBibliotecaRoute: typeof MusicaBibliotecaRoute
   MusicaBuscaRoute: typeof MusicaBuscaRoute
+  MusicaFavoritasRoute: typeof MusicaFavoritasRoute
   MusicaIndexRoute: typeof MusicaIndexRoute
   MusicaAlbumSlugRoute: typeof MusicaAlbumSlugRoute
   MusicaArtistaSlugRoute: typeof MusicaArtistaSlugRoute
@@ -459,6 +479,7 @@ interface MusicaRouteChildren {
 const MusicaRouteChildren: MusicaRouteChildren = {
   MusicaBibliotecaRoute: MusicaBibliotecaRoute,
   MusicaBuscaRoute: MusicaBuscaRoute,
+  MusicaFavoritasRoute: MusicaFavoritasRoute,
   MusicaIndexRoute: MusicaIndexRoute,
   MusicaAlbumSlugRoute: MusicaAlbumSlugRoute,
   MusicaArtistaSlugRoute: MusicaArtistaSlugRoute,

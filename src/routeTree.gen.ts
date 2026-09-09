@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
+import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as MusicaRouteImport } from './routes/musica'
@@ -26,6 +27,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as MusicaIndexRouteImport } from './routes/musica.index'
 import { Route as MusicaBibliotecaRouteImport } from './routes/musica.biblioteca'
 import { Route as MusicaBuscaRouteImport } from './routes/musica.busca'
+import { Route as MusicaFavoritasRouteImport } from './routes/musica.favoritas'
 import { Route as MusicaAlbumSlugRouteImport } from './routes/musica.album.$slug'
 import { Route as MusicaArtistaSlugRouteImport } from './routes/musica.artista.$slug'
 import { Route as MusicaFaixaSlugRouteImport } from './routes/musica.faixa.$slug'
@@ -54,6 +56,11 @@ const ConteNosRoute = ConteNosRouteImport.update({
 const CultosRoute = CultosRouteImport.update({
   id: '/cultos',
   path: '/cultos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MensagensRoute = MensagensRouteImport.update({
@@ -116,6 +123,11 @@ const MusicaBuscaRoute = MusicaBuscaRouteImport.update({
   path: '/busca',
   getParentRoute: () => MusicaRoute,
 } as any)
+const MusicaFavoritasRoute = MusicaFavoritasRouteImport.update({
+  id: '/favoritas',
+  path: '/favoritas',
+  getParentRoute: () => MusicaRoute,
+} as any)
 const MusicaAlbumSlugRoute = MusicaAlbumSlugRouteImport.update({
   id: '/album/$slug',
   path: '/album/$slug',
@@ -143,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/musica': typeof MusicaRouteWithChildren
@@ -154,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica/': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -166,6 +180,7 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
@@ -176,6 +191,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -189,6 +205,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/musica': typeof MusicaRouteWithChildren
@@ -200,6 +217,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/musica/biblioteca': typeof MusicaBibliotecaRoute
   '/musica/busca': typeof MusicaBuscaRoute
+  '/musica/favoritas': typeof MusicaFavoritasRoute
   '/musica/': typeof MusicaIndexRoute
   '/musica/album/$slug': typeof MusicaAlbumSlugRoute
   '/musica/artista/$slug': typeof MusicaArtistaSlugRoute
@@ -214,6 +232,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/musica'
@@ -225,6 +244,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica/'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -237,6 +257,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/novo-aqui'
@@ -247,6 +268,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -259,6 +281,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/musica'
@@ -270,6 +293,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/musica/biblioteca'
     | '/musica/busca'
+    | '/musica/favoritas'
     | '/musica/'
     | '/musica/album/$slug'
     | '/musica/artista/$slug'
@@ -283,6 +307,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   ConteNosRoute: typeof ConteNosRoute
   CultosRoute: typeof CultosRoute
+  EntrarRoute: typeof EntrarRoute
   MensagensRoute: typeof MensagensRoute
   MinisteriosRoute: typeof MinisteriosRoute
   MusicaRoute: typeof MusicaRouteWithChildren
@@ -329,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/cultos'
       fullPath: '/cultos'
       preLoaderRoute: typeof CultosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mensagens': {
@@ -415,6 +447,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MusicaBuscaRouteImport
       parentRoute: typeof MusicaRoute
     }
+    '/musica/favoritas': {
+      id: '/musica/favoritas'
+      path: '/favoritas'
+      fullPath: '/musica/favoritas'
+      preLoaderRoute: typeof MusicaFavoritasRouteImport
+      parentRoute: typeof MusicaRoute
+    }
     '/musica/album/$slug': {
       id: '/musica/album/$slug'
       path: '/album/$slug'
@@ -449,6 +488,7 @@ declare module '@tanstack/react-router' {
 interface MusicaRouteChildren {
   MusicaBibliotecaRoute: typeof MusicaBibliotecaRoute
   MusicaBuscaRoute: typeof MusicaBuscaRoute
+  MusicaFavoritasRoute: typeof MusicaFavoritasRoute
   MusicaIndexRoute: typeof MusicaIndexRoute
   MusicaAlbumSlugRoute: typeof MusicaAlbumSlugRoute
   MusicaArtistaSlugRoute: typeof MusicaArtistaSlugRoute
@@ -459,6 +499,7 @@ interface MusicaRouteChildren {
 const MusicaRouteChildren: MusicaRouteChildren = {
   MusicaBibliotecaRoute: MusicaBibliotecaRoute,
   MusicaBuscaRoute: MusicaBuscaRoute,
+  MusicaFavoritasRoute: MusicaFavoritasRoute,
   MusicaIndexRoute: MusicaIndexRoute,
   MusicaAlbumSlugRoute: MusicaAlbumSlugRoute,
   MusicaArtistaSlugRoute: MusicaArtistaSlugRoute,
@@ -475,6 +516,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   ConteNosRoute: ConteNosRoute,
   CultosRoute: CultosRoute,
+  EntrarRoute: EntrarRoute,
   MensagensRoute: MensagensRoute,
   MinisteriosRoute: MinisteriosRoute,
   MusicaRoute: MusicaRouteWithChildren,

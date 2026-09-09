@@ -139,7 +139,11 @@ export type Table =
   | "sermons"
   | "gallery_photos"
   | "banners"
-  | "admin_users";
+  | "admin_users"
+  | "music_artists"
+  | "music_albums"
+  | "music_tracks"
+  | "playlists";
 
 type Value = string | number | boolean | string[] | null;
 export type Row = Record<string, Value>;
@@ -152,6 +156,10 @@ const orderBy: Record<Table, { column: string; ascending: boolean }> = {
   gallery_photos: { column: "sort_order", ascending: true },
   banners: { column: "created_at", ascending: false },
   admin_users: { column: "created_at", ascending: false },
+  music_artists: { column: "name", ascending: true },
+  music_albums: { column: "created_at", ascending: false },
+  music_tracks: { column: "created_at", ascending: false },
+  playlists: { column: "created_at", ascending: false },
 };
 
 type AnyDb = {

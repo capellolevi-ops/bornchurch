@@ -1,4 +1,5 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -6,6 +7,8 @@ import { useEffect, useState } from "react";
 import logo from "@/assets/born-logo.png";
 import { navItems } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { useSession } from "@/hooks/useSession";
+import { supabase } from "@/integrations/supabase/client";
 
 import { SocialLinks } from "./SocialLinks";
 import { ThemeToggle } from "./ThemeToggle";
@@ -120,5 +123,50 @@ export function Header() {
         ) : null}
       </AnimatePresence>
     </header>
+  );
+}
+
+/** Link de conta: entrar (visitante) ou biblioteca + sair (logado). */
+function AccountLink({ onNavigate }: { onNavigate: () => void }) {
+  const { user, loading } = useSession();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  if (loading) return null;
+
+  if (!user) {
+    return (
+      <Link
+        to="/entrar"
+        onClick={onNavigate}
+        className="text-[12px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-gold"
+      >
+        Entrar
+      </Link>
+    );
+  }
+
+  return (
+    <span className="flex items-center gap-3">
+      <Link
+        to="/musica/biblioteca"
+        onClick={onNavigate}
+        className="text-[12px] uppercase tracking-[0.14em] text-gold"
+      >
+        Minha conta
+      </Link>
+      <button
+        type="button"
+        onClick={async () => {
+          onNavigate();
+          await queryClient.cancelQueries();
+          queryClient.clear();
+          await supabase.auth.signOut();
+          void navigate({ to: "/", replace: true });
+        }}
+        className="text-[12px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-gold"
+      >
+        Sair
+      </button>
+    </span>
   );
 }

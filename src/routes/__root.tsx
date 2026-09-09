@@ -19,6 +19,8 @@ import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { TopBanner } from "@/components/site/TopBanner";
 import { MaintenanceScreen } from "@/components/site/MaintenanceScreen";
 import { getActiveBanners, getSiteContent } from "@/lib/public.functions";
+import { PlayerProvider } from "@/components/music/PlayerProvider";
+import { PlayerBar } from "@/components/music/PlayerBar";
 
 function NotFoundComponent() {
   return (
@@ -145,14 +147,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <main className="min-h-screen">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-      <Toaster position="top-center" />
+      <PlayerProvider>
+        <Header />
+        <main className="min-h-screen">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+        <WhatsAppButton />
+        <PlayerBar />
+        <Toaster position="top-center" />
+      </PlayerProvider>
     </QueryClientProvider>
   );
 }

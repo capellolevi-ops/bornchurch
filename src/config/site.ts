@@ -196,6 +196,7 @@ export const navItems = [
   { label: "Cultos", to: "/cultos" },
   { label: "Ministérios", to: "/ministerios" },
   { label: "Mensagens", to: "/mensagens" },
+  { label: "Música", to: "/musica" },
   { label: "Próximo Passo", to: "/proximo-passo" },
   { label: "Servir", to: "/servir" },
   { label: "Conte-nos", to: "/conte-nos" },

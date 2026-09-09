@@ -151,7 +151,8 @@ export function CardGrid({ items }: { items: CardItem[] }) {
           key={`${item.to}-${Object.values(item.params).join()}`}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           to={item.to as any}
-          params={item.params}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          params={item.params as any}
           className="group rounded-2xl border border-border bg-card/40 p-3 transition-colors hover:border-gold"
         >
           <div className="aspect-square overflow-hidden rounded-xl">

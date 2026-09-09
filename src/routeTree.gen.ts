@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteNosRouteImport } from './routes/conte-nos'
 import { Route as CultosRouteImport } from './routes/cultos'
+import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as MensagensRouteImport } from './routes/mensagens'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as MusicaRouteImport } from './routes/musica'
@@ -55,6 +56,11 @@ const ConteNosRoute = ConteNosRouteImport.update({
 const CultosRoute = CultosRouteImport.update({
   id: '/cultos',
   path: '/cultos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MensagensRoute = MensagensRouteImport.update({
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/musica': typeof MusicaRouteWithChildren
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/novo-aqui': typeof NovoAquiRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/conte-nos': typeof ConteNosRoute
   '/cultos': typeof CultosRoute
+  '/entrar': typeof EntrarRoute
   '/mensagens': typeof MensagensRoute
   '/ministerios': typeof MinisteriosRoute
   '/musica': typeof MusicaRouteWithChildren
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/musica'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/novo-aqui'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conte-nos'
     | '/cultos'
+    | '/entrar'
     | '/mensagens'
     | '/ministerios'
     | '/musica'
@@ -295,6 +307,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   ConteNosRoute: typeof ConteNosRoute
   CultosRoute: typeof CultosRoute
+  EntrarRoute: typeof EntrarRoute
   MensagensRoute: typeof MensagensRoute
   MinisteriosRoute: typeof MinisteriosRoute
   MusicaRoute: typeof MusicaRouteWithChildren
@@ -341,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/cultos'
       fullPath: '/cultos'
       preLoaderRoute: typeof CultosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mensagens': {
@@ -496,6 +516,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   ConteNosRoute: ConteNosRoute,
   CultosRoute: CultosRoute,
+  EntrarRoute: EntrarRoute,
   MensagensRoute: MensagensRoute,
   MinisteriosRoute: MinisteriosRoute,
   MusicaRoute: MusicaRouteWithChildren,

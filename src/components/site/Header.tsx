@@ -62,6 +62,7 @@ export function Header() {
             </Link>
           ))}
           <span className="h-4 w-px bg-border" />
+          <AccountLink onNavigate={() => setOpen(false)} />
           <SocialLinks />
           <ThemeToggle />
         </nav>
@@ -111,7 +112,8 @@ export function Header() {
                 </motion.div>
               ))}
             </div>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex flex-col items-center gap-6">
+              <AccountLink onNavigate={() => setOpen(false)} />
               <SocialLinks />
             </div>
           </motion.nav>
